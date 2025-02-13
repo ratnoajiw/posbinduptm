@@ -4,17 +4,19 @@ sealed class AntropometriEvent {}
 
 final class AntropometriUpload extends AntropometriEvent {
   final String posterId;
-  final String tanggal;
+  final String updateAt;
   final double beratBadan;
   final double tinggiBadan;
   final double lingkarPerut;
+  final DateTime pemeriksaanAt;
 
   AntropometriUpload({
     required this.posterId,
-    required this.tanggal,
+    required this.updateAt,
     required this.beratBadan,
     required this.tinggiBadan,
     required this.lingkarPerut,
+    required this.pemeriksaanAt,
   });
 }
 
@@ -37,12 +39,14 @@ class AntropometriUpdate extends AntropometriEvent {
   final double beratBadan;
   final double tinggiBadan;
   final double lingkarPerut;
+  final DateTime pemeriksaanAt;
 
   AntropometriUpdate({
     required this.id,
     required this.beratBadan,
     required this.tinggiBadan,
     required this.lingkarPerut,
+    required this.pemeriksaanAt,
   });
 }
 

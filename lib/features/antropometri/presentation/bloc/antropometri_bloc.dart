@@ -27,13 +27,13 @@ class AntropometriBloc extends Bloc<AntropometriEvent, AntropometriState> {
         _updateAntropometri = updateAntropometri,
         super(AntropometriInitial()) {
     on<AntropometriEvent>((event, emit) => emit(AntropometriLoading()));
-    on<AntropometriUpload>(_onAntropometriUpload);
+    on<AntropometriUpload>(_onUploadAntropometri);
     on<AntropometriGetAllAntropometris>(_onGetAllAntropometris);
     on<AntropometriDelete>(_onDeleteAntropometri);
     on<AntropometriUpdate>(_onUpdateAntropometri);
   }
 
-  void _onAntropometriUpload(
+  void _onUploadAntropometri(
       AntropometriUpload event, Emitter<AntropometriState> emit) async {
     final res = await _uploadAntropometri(
       UploadAntropometriParams(
@@ -41,6 +41,7 @@ class AntropometriBloc extends Bloc<AntropometriEvent, AntropometriState> {
         tinggiBadan: event.tinggiBadan,
         beratBadan: event.beratBadan,
         lingkarPerut: event.lingkarPerut,
+        pemeriksaanAt: event.pemeriksaanAt,
       ),
     );
 
@@ -61,6 +62,36 @@ class AntropometriBloc extends Bloc<AntropometriEvent, AntropometriState> {
     );
   }
 
+  void _onUpdateAntropometri(
+      AntropometriUpdate event, Emitter<AntropometriState> emit) async {
+    print("➡️ Mulai update: ${event.id}"); // ✅ Debug log
+
+    emit(AntropometriLoading());
+    print("🕒 Emit AntropometriLoading()"); // ✅ Debug log
+
+    final res = await _updateAntropometri(
+      UpdateAntropometriParams(
+        id: event.id,
+        tinggiBadan: event.tinggiBadan,
+        beratBadan: event.beratBadan,
+        lingkarPerut: event.lingkarPerut,
+        pemeriksaanAt: event.pemeriksaanAt,
+      ),
+    );
+
+    res.fold(
+      (l) {
+        print("❌ Update Gagal: ${l.message}"); // ✅ Debug log
+        emit(AntropometriFailure(l.message));
+      },
+      (r) {
+        print(
+            "✅ Update Berhasil, emit AntropometriUpdateSuccess!"); // ✅ Debug log
+        emit(AntropometriUpdateSuccess());
+      },
+    );
+  }
+
   void _onDeleteAntropometri(
       AntropometriDelete event, Emitter<AntropometriState> emit) async {
     final res = await _deleteAntropometri(
@@ -69,23 +100,6 @@ class AntropometriBloc extends Bloc<AntropometriEvent, AntropometriState> {
     res.fold(
       (l) => emit(AntropometriFailure(l.message)),
       (r) => emit(AntropometriDeleteSuccess()),
-    );
-  }
-
-  void _onUpdateAntropometri(
-      AntropometriUpdate event, Emitter<AntropometriState> emit) async {
-    final res = await _updateAntropometri(
-      UpdateAntropometriParams(
-        id: event.id,
-        tinggiBadan: event.tinggiBadan,
-        beratBadan: event.beratBadan,
-        lingkarPerut: event.lingkarPerut,
-      ),
-    );
-
-    res.fold(
-      (l) => emit(AntropometriFailure(l.message)),
-      (r) => emit(AntropometriUpdateSuccess()),
     );
   }
 }

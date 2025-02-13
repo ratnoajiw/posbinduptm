@@ -10,21 +10,22 @@ class AntropometriModel extends AntropometriEntity {
     required super.imtPasien,
     required super.updatedAt,
     required super.posterName,
+    required super.pemeriksaanAt,
   });
 
   factory AntropometriModel.fromJson(Map<String, dynamic> map) {
     return AntropometriModel(
-      id: map['id'] as String,
-      posterId: map['poster_id'] as String,
-      tinggiBadan: map['tinggi_badan'].toDouble(),
-      beratBadan: map['berat_badan'].toDouble(),
-      lingkarPerut: map['lingkar_perut'].toDouble(),
-      imtPasien: map['imt'].toDouble(),
-      updatedAt: map['updated_at'] == null
-          ? DateTime.now()
-          : DateTime.parse(map['updated_at']),
-      posterName: map['profiles']?['name'] ?? 'Tidak diketahui',
-    );
+        id: map['id'] as String,
+        posterId: map['poster_id'] as String,
+        tinggiBadan: map['tinggi_badan'].toDouble(),
+        beratBadan: map['berat_badan'].toDouble(),
+        lingkarPerut: map['lingkar_perut'].toDouble(),
+        imtPasien: map['imt'].toDouble(),
+        updatedAt: map['updated_at'] == null
+            ? DateTime.now()
+            : DateTime.parse(map['updated_at']),
+        posterName: map['profiles']?['name'] ?? 'Tidak diketahui',
+        pemeriksaanAt: DateTime.parse(map['pemeriksaan_at']));
   }
 
   Map<String, dynamic> toJson() {
@@ -36,6 +37,7 @@ class AntropometriModel extends AntropometriEntity {
       'lingkar_perut': lingkarPerut,
       'imt': imtPasien,
       'updated_at': updatedAt.toIso8601String(),
+      'pemeriksaan_at': pemeriksaanAt.toIso8601String(),
     };
   }
 
@@ -48,6 +50,7 @@ class AntropometriModel extends AntropometriEntity {
     double? imtPasien,
     DateTime? updatedAt,
     String? posterName,
+    DateTime? pemeriksaanAt,
   }) {
     return AntropometriModel(
       id: id ?? this.id,
@@ -58,6 +61,7 @@ class AntropometriModel extends AntropometriEntity {
       imtPasien: imtPasien ?? this.imtPasien,
       updatedAt: updatedAt ?? this.updatedAt,
       posterName: posterName ?? this.posterName,
+      pemeriksaanAt: pemeriksaanAt ?? this.pemeriksaanAt,
     );
   }
 }

@@ -1,31 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
+import 'package:posbinduptm/core/utils/custom_date_picker.dart';
+import 'package:posbinduptm/core/utils/custom_time_picker.dart';
 import 'package:posbinduptm/features/antropometri/presentation/bloc/antropometri_bloc.dart';
 import 'package:posbinduptm/features/antropometri/presentation/widgets/antropometri_field.dart';
 
-class EditAntropometriPage extends StatefulWidget {
+class UpdateAntropometriPage extends StatefulWidget {
   final String id;
   final double tinggiBadan;
   final double beratBadan;
   final double lingkarPerut;
+  final DateTime pemeriksaanAt;
 
-  const EditAntropometriPage({
+  const UpdateAntropometriPage({
     super.key,
     required this.id,
     required this.tinggiBadan,
     required this.beratBadan,
     required this.lingkarPerut,
+    required this.pemeriksaanAt,
   });
 
   @override
-  State<EditAntropometriPage> createState() => _EditAntropometriPageState();
+  State<UpdateAntropometriPage> createState() => _EditAntropometriPageState();
 }
 
-class _EditAntropometriPageState extends State<EditAntropometriPage> {
+class _EditAntropometriPageState extends State<UpdateAntropometriPage> {
   final _formKey = GlobalKey<FormState>();
   late TextEditingController tinggiBadanController;
   late TextEditingController beratBadanController;
   late TextEditingController lingkarPerutController;
+  final TextEditingController tanggalController = TextEditingController();
+  final TextEditingController waktuController = TextEditingController();
+
   bool isLoading = false; // Untuk menampilkan indikator loading
 
   @override
@@ -37,6 +45,9 @@ class _EditAntropometriPageState extends State<EditAntropometriPage> {
         TextEditingController(text: widget.beratBadan.toString());
     lingkarPerutController =
         TextEditingController(text: widget.lingkarPerut.toString());
+    tanggalController.text =
+        DateFormat('dd/MM/yyyy').format(widget.pemeriksaanAt);
+    waktuController.text = DateFormat('HH:mm').format(widget.pemeriksaanAt);
   }
 
   @override
@@ -44,18 +55,42 @@ class _EditAntropometriPageState extends State<EditAntropometriPage> {
     tinggiBadanController.dispose();
     beratBadanController.dispose();
     lingkarPerutController.dispose();
+    tanggalController.dispose();
+    waktuController.dispose();
     super.dispose();
+  }
+
+  Future<void> _pickTanggal(BuildContext context) async {
+    final String? selectedDate = await CustomDatePicker.pickDate(context);
+    if (selectedDate != null) {
+      setState(() {
+        tanggalController.text = selectedDate;
+      });
+    }
+  }
+
+  Future<void> _pickWaktu(BuildContext context) async {
+    final String? selectedTime = await CustomTimePicker.pickTime(context);
+    if (selectedTime != null) {
+      setState(() {
+        waktuController.text = selectedTime;
+      });
+    }
   }
 
   void _updateAntropometri() {
     if (_formKey.currentState!.validate()) {
-      setState(() => isLoading = true); // Aktifkan loading
+      setState(() => isLoading = true);
+
+      DateTime pemeriksaanAt = DateFormat('dd/MM/yyyy HH:mm')
+          .parse('${tanggalController.text} ${waktuController.text}');
 
       context.read<AntropometriBloc>().add(AntropometriUpdate(
             id: widget.id,
             tinggiBadan: double.parse(tinggiBadanController.text),
             beratBadan: double.parse(beratBadanController.text),
             lingkarPerut: double.parse(lingkarPerutController.text),
+            pemeriksaanAt: pemeriksaanAt,
           ));
     }
   }
@@ -99,33 +134,57 @@ class _EditAntropometriPageState extends State<EditAntropometriPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    "Masukkan Data Antropometri",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.blueAccent,
-                    ),
+                  Text("Tanggal Periksa",
+                      style: Theme.of(context).textTheme.titleMedium),
+                  const SizedBox(height: 10),
+                  AntropometriField(
+                    controller: tanggalController,
+                    hintText: 'Pilih tanggal',
+                    keyboardType: TextInputType.none,
+                    readOnly: true,
+                    onTap: () => _pickTanggal(context),
+                    suffixIcon: Icons.calendar_today, // Ikon kalender
                   ),
-                  const SizedBox(height: 15),
+                  const SizedBox(height: 10),
+                  Text("Waktu Periksa",
+                      style: Theme.of(context).textTheme.titleMedium),
+                  const SizedBox(height: 10),
+                  AntropometriField(
+                    controller: waktuController,
+                    hintText: 'Pilih waktu',
+                    keyboardType: TextInputType.none,
+                    readOnly: true,
+                    onTap: () => _pickWaktu(context),
+                    suffixIcon: Icons.access_time, // Ikon jam
+                  ),
+                  const SizedBox(height: 10),
+                  Text("Tinggi Badan",
+                      style: Theme.of(context).textTheme.titleMedium),
+                  const SizedBox(height: 10),
                   AntropometriField(
                     controller: tinggiBadanController,
-                    labelTextField: 'Tinggi Badan',
-                    hintText: 'Tinggi Badan (cm)',
+                    hintText: 'Contoh: 150 (cm)',
                     keyboardType: TextInputType.number,
+                    suffixText: 'cm',
                   ),
+                  const SizedBox(height: 10),
+                  Text("Berat Badan",
+                      style: Theme.of(context).textTheme.titleMedium),
                   const SizedBox(height: 10),
                   AntropometriField(
                     controller: beratBadanController,
-                    labelTextField: 'Berat Badan',
-                    hintText: 'Berat Badan (kg)',
+                    hintText: 'Contoh: 50 (kg)',
                     keyboardType: TextInputType.number,
+                    suffixText: 'kg',
                   ),
+                  const SizedBox(height: 10),
+                  Text("Lingkar Perut",
+                      style: Theme.of(context).textTheme.titleMedium),
                   const SizedBox(height: 10),
                   AntropometriField(
                     controller: lingkarPerutController,
-                    hintText: 'Lingkar Perut (cm)',
-                    labelTextField: 'Lingkar Perut',
+                    hintText: 'Contoh: 40 (cm)',
+                    suffixText: 'cm',
                     keyboardType: TextInputType.number,
                   ),
                 ],

@@ -16,6 +16,7 @@ class UploadAntropometri
       beratBadan: params.beratBadan,
       lingkarPerut: params.lingkarPerut,
       posterId: params.posterId,
+      pemeriksaanAt: params.pemeriksaanAt,
     );
   }
 }
@@ -25,11 +26,13 @@ class UploadAntropometriParams {
   final double beratBadan;
   final double lingkarPerut;
   final String posterId;
+  final DateTime pemeriksaanAt;
 
   UploadAntropometriParams({
     required this.tinggiBadan,
     required this.beratBadan,
     required this.lingkarPerut,
     required this.posterId,
+    required this.pemeriksaanAt,
   });
 }

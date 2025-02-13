@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:posbinduptm/core/utils/format_date.dart';
 import 'package:posbinduptm/features/antropometri/domain/entities/antropometri_entity.dart';
-import 'package:posbinduptm/features/antropometri/presentation/pages/edit_antropometri_page.dart';
+import 'package:posbinduptm/features/antropometri/presentation/pages/update_antropometri_page.dart';
 
 class AntropometriCard extends StatelessWidget {
   final AntropometriEntity antropometri;
@@ -46,7 +46,7 @@ class AntropometriCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(
-                  "Pemeriksaan: ${formatDateBydMMMYYYY(antropometri.updatedAt)}",
+                  "Pemeriksaan: ${formatDateBydMMMMYYYY(antropometri.pemeriksaanAt)}",
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
@@ -115,11 +115,12 @@ class AntropometriCard extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => EditAntropometriPage(
+                              builder: (context) => UpdateAntropometriPage(
                                 id: antropometri.id,
                                 tinggiBadan: antropometri.tinggiBadan,
                                 beratBadan: antropometri.beratBadan,
                                 lingkarPerut: antropometri.lingkarPerut,
+                                pemeriksaanAt: antropometri.pemeriksaanAt,
                               ),
                             ),
                           );

@@ -19,20 +19,6 @@ class AntropometriRepositoryImpl implements AntropometriRepository {
   );
 
   @override
-  Future<Either<Failure, void>> deleteAntropometri(
-      String antropometriId) async {
-    try {
-      if (!await connectionChecker.isConnected) {
-        return left(Failure(Constant.noConnectionErrorMessage));
-      }
-      await remoteDataSource.deleteAntropometri(antropometriId);
-      return right(null);
-    } on ServerException catch (e) {
-      return left(Failure(e.message));
-    }
-  }
-
-  @override
   Future<Either<Failure, List<AntropometriEntity>>> getAllAntropometri(
       {required String posterId}) async {
     try {
@@ -48,11 +34,13 @@ class AntropometriRepositoryImpl implements AntropometriRepository {
   }
 
   @override
-  Future<Either<Failure, AntropometriEntity>> uploadAntropometri(
-      {required double tinggiBadan,
-      required double beratBadan,
-      required double lingkarPerut,
-      required String posterId}) async {
+  Future<Either<Failure, AntropometriEntity>> uploadAntropometri({
+    required double tinggiBadan,
+    required double beratBadan,
+    required double lingkarPerut,
+    required String posterId,
+    required DateTime pemeriksaanAt,
+  }) async {
     try {
       if (!await connectionChecker.isConnected) {
         return left(Failure(Constant.noConnectionErrorMessage));
@@ -64,7 +52,8 @@ class AntropometriRepositoryImpl implements AntropometriRepository {
         beratBadan: beratBadan,
         lingkarPerut: lingkarPerut,
         updatedAt: DateTime.now(),
-        imtPasien: beratBadan / (tinggiBadan * tinggiBadan),
+        imtPasien: beratBadan / ((tinggiBadan / 100) * (tinggiBadan / 100)),
+        pemeriksaanAt: pemeriksaanAt,
         posterName: '',
       );
       final uploadedAntropometri =
@@ -81,6 +70,7 @@ class AntropometriRepositoryImpl implements AntropometriRepository {
     required double tinggiBadan,
     required double beratBadan,
     required double lingkarPerut,
+    required DateTime pemeriksaanAt,
   }) async {
     try {
       if (!await connectionChecker.isConnected) {
@@ -91,7 +81,22 @@ class AntropometriRepositoryImpl implements AntropometriRepository {
         tinggiBadan: tinggiBadan,
         beratBadan: beratBadan,
         lingkarPerut: lingkarPerut,
+        pemeriksaanAt: pemeriksaanAt,
       );
+      return right(null);
+    } on ServerException catch (e) {
+      return left(Failure(e.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> deleteAntropometri(
+      String antropometriId) async {
+    try {
+      if (!await connectionChecker.isConnected) {
+        return left(Failure(Constant.noConnectionErrorMessage));
+      }
+      await remoteDataSource.deleteAntropometri(antropometriId);
       return right(null);
     } on ServerException catch (e) {
       return left(Failure(e.message));

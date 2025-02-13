@@ -9,6 +9,7 @@ abstract interface class AntropometriRepository {
     required double beratBadan,
     required double lingkarPerut,
     required String posterId,
+    required DateTime pemeriksaanAt,
   });
 //get all (read) antropometri
   Future<Either<Failure, List<AntropometriEntity>>> getAllAntropometri({
@@ -21,6 +22,7 @@ abstract interface class AntropometriRepository {
     required double tinggiBadan,
     required double beratBadan,
     required double lingkarPerut,
+    required DateTime pemeriksaanAt,
   });
 //delete antropometri
   Future<Either<Failure, void>> deleteAntropometri(

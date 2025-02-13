@@ -15,6 +15,7 @@ class UpdateAntropometri implements UseCase<void, UpdateAntropometriParams> {
       tinggiBadan: params.tinggiBadan,
       beratBadan: params.beratBadan,
       lingkarPerut: params.lingkarPerut,
+      pemeriksaanAt: params.pemeriksaanAt,
     );
   }
 }
@@ -24,11 +25,13 @@ class UpdateAntropometriParams {
   final double tinggiBadan;
   final double beratBadan;
   final double lingkarPerut;
+  final DateTime pemeriksaanAt;
 
   UpdateAntropometriParams({
     required this.id,
     required this.tinggiBadan,
     required this.beratBadan,
     required this.lingkarPerut,
+    required this.pemeriksaanAt,
   });
 }

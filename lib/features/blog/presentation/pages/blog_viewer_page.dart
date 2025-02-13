@@ -72,7 +72,7 @@ class BlogViewerPage extends StatelessWidget {
                 ),
               ),
               Text(
-                '${formatDateBydMMMYYYY(blog.updatedAt)} • ${calculateReadingTime(blog.content)} min read',
+                '${formatDateBydMMMMYYYY(blog.updatedAt)} • ${calculateReadingTime(blog.content)} min read',
                 style: const TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w500,

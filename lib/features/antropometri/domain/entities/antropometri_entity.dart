@@ -7,6 +7,7 @@ class AntropometriEntity {
   final double lingkarPerut;
   final double imtPasien;
   final String? posterName;
+  final DateTime pemeriksaanAt;
 
   AntropometriEntity({
     required this.id,
@@ -17,5 +18,6 @@ class AntropometriEntity {
     required this.lingkarPerut,
     required this.imtPasien,
     this.posterName,
+    required this.pemeriksaanAt,
   });
 }
