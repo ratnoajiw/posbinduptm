@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:posbinduptm/core/utils/format_date.dart';
+import 'package:posbinduptm/core/utils/format_number.dart';
 import 'package:posbinduptm/features/antropometri/domain/entities/antropometri_entity.dart';
 import 'package:posbinduptm/features/antropometri/presentation/pages/update_antropometri_page.dart';
 
@@ -20,18 +21,23 @@ class AntropometriCard extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
+        color: Colors.white,
         border: Border.all(
-          color: color, // Warna outline mengikuti parameter
-          width: 2,
+          color: color.withOpacity(0.8), // **Outline mengikuti warna utama**
+          width: 1.5, // Lebar border
         ),
         borderRadius:
             BorderRadius.circular(12), // Sama dengan Card agar tidak aneh
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.shade300, // **Bayangan sedikit berwarna**
+            blurRadius: 6,
+            spreadRadius: 2,
+            offset: const Offset(0, 3),
+          ),
+        ],
       ),
-      child: Card(
-        elevation: 4, // Tambahkan shadow agar lebih menarik
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
+      child: SizedBox(
         child: Padding(
           padding: const EdgeInsets.all(12),
           child: Column(
@@ -41,24 +47,19 @@ class AntropometriCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
-                  color:
-                      color.withOpacity(0.2), // Warna latar belakang transparan
+                  color: color.withOpacity(0.2),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(
                   "Pemeriksaan: ${formatDateBydMMMMYYYY(antropometri.pemeriksaanAt)}",
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
-                    color: color, // Warna teks mengikuti outline
+                    color: Colors.black, // Warna teks mengikuti outline
                   ),
                 ),
               ),
-
-              Divider(
-                color: color,
-              ),
-
+              const Divider(),
               // **Data Antropometri**
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -66,13 +67,12 @@ class AntropometriCard extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _buildDataRow(
-                          "📏 Tinggi Badan", "${antropometri.tinggiBadan} cm"),
-                      _buildDataRow(
-                          "⚖️ Berat Badan", "${antropometri.beratBadan} kg"),
+                      _buildDataRow("📏 Tinggi Badan",
+                          "${formatNumber(antropometri.tinggiBadan)} cm"),
+                      _buildDataRow("⚖️ Berat Badan",
+                          "${formatNumber(antropometri.beratBadan)} kg"),
                       _buildDataRow("📐 Lingkar Perut",
-                          "${antropometri.lingkarPerut} cm"),
-
+                          "${formatNumber(antropometri.lingkarPerut)} cm"),
                       // **IMT + Kategorinya**
                       Row(
                         children: [
@@ -161,7 +161,7 @@ class AntropometriCard extends StatelessWidget {
 
   String _getIMTCategory(double imt) {
     if (imt < 18.5) return "Berat Badan Kurang";
-    if (imt >= 18.5 && imt < 25.0) return "Normal";
+    if (imt >= 18.5 && imt < 25.0) return "Ideal";
     if (imt >= 25.0 && imt < 30.0) return "Berat Badan Lebih";
     return "Obesitas";
   }

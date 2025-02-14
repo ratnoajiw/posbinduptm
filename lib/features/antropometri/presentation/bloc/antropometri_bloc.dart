@@ -64,10 +64,7 @@ class AntropometriBloc extends Bloc<AntropometriEvent, AntropometriState> {
 
   void _onUpdateAntropometri(
       AntropometriUpdate event, Emitter<AntropometriState> emit) async {
-    print("➡️ Mulai update: ${event.id}"); // ✅ Debug log
-
     emit(AntropometriLoading());
-    print("🕒 Emit AntropometriLoading()"); // ✅ Debug log
 
     final res = await _updateAntropometri(
       UpdateAntropometriParams(
@@ -81,12 +78,9 @@ class AntropometriBloc extends Bloc<AntropometriEvent, AntropometriState> {
 
     res.fold(
       (l) {
-        print("❌ Update Gagal: ${l.message}"); // ✅ Debug log
         emit(AntropometriFailure(l.message));
       },
       (r) {
-        print(
-            "✅ Update Berhasil, emit AntropometriUpdateSuccess!"); // ✅ Debug log
         emit(AntropometriUpdateSuccess());
       },
     );

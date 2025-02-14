@@ -38,12 +38,12 @@ class AntropometriRemoteDataSourceImpl implements AntropometriRemoteDataSource {
       final antropometries = await supabaseClient
           .from('antropometri')
           .select('*, profiles(name)')
-          .eq('poster_id', posterId);
+          .eq('poster_id', posterId)
+          .order('pemeriksaan_at', ascending: false);
 
       return antropometries.map((antropometri) {
         return AntropometriModel.fromJson(antropometri).copyWith(
-          posterName: antropometri['profiles']
-              ?['name'], // Pastikan 'profiles' tidak null
+          posterName: antropometri['profiles']?['name'],
         );
       }).toList();
     } on PostgrestException catch (e) {

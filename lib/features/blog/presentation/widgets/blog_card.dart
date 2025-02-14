@@ -61,10 +61,10 @@ class BlogCard extends StatelessWidget {
                           ),
                           child: Text(
                             e,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w500,
-                              color: color,
+                              color: Colors.black,
                             ),
                           ),
                         ),

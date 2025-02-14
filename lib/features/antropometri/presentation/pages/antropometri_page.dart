@@ -9,6 +9,7 @@ import 'package:posbinduptm/core/utils/show_snackbar.dart';
 import 'package:posbinduptm/features/antropometri/domain/entities/antropometri_entity.dart';
 import 'package:posbinduptm/features/antropometri/presentation/bloc/antropometri_bloc.dart';
 import 'package:posbinduptm/features/antropometri/presentation/pages/add_antropometri_page.dart';
+import 'package:posbinduptm/features/antropometri/presentation/pages/detail_antropometri_page.dart';
 import 'package:posbinduptm/features/antropometri/presentation/widgets/antropometri_card.dart';
 
 class AntropometriPage extends StatefulWidget {
@@ -112,15 +113,27 @@ class _AntropometriPageState extends State<AntropometriPage> {
                 itemCount: antropometriList.length,
                 itemBuilder: (context, index) {
                   final antropometri = antropometriList[index];
-
-                  return AntropometriCard(
-                    antropometri: antropometri,
-                    onDelete: () => _showDeleteDialog(context, antropometri.id),
-                    color: index % 3 == 0
-                        ? AppPallete.gradientGreen1
-                        : index % 3 == 1
-                            ? AppPallete.gradientGreen2
-                            : AppPallete.gradientGreen3,
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DetailAntropometriPage(
+                              antropometri: antropometri),
+                        ),
+                      );
+                    },
+                    child: Column(
+                      children: [
+                        AntropometriCard(
+                            antropometri: antropometri,
+                            onDelete: () =>
+                                _showDeleteDialog(context, antropometri.id),
+                            color: index % 3 == 0
+                                ? AppPallete.gradientGreen1
+                                : AppPallete.gradientGreen2),
+                      ],
+                    ),
                   );
                 },
               );
