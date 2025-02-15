@@ -5,12 +5,12 @@ import 'package:posbinduptm/features/antropometri/presentation/widgets/antropome
 import 'package:posbinduptm/features/antropometri/presentation/bloc/antropometri_bloc.dart';
 import 'package:posbinduptm/core/common/widgets/loader.dart';
 
-class AntropometriChartPage extends StatelessWidget {
+class ChartAntropometriPage extends StatelessWidget {
   static route() => MaterialPageRoute(
-        builder: (context) => const AntropometriChartPage(),
+        builder: (context) => const ChartAntropometriPage(),
       );
 
-  const AntropometriChartPage({super.key});
+  const ChartAntropometriPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -52,12 +52,9 @@ class AntropometriChartPage extends StatelessWidget {
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Card(
-                    elevation: 3,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
+                  SizedBox(
                     child: Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Column(
@@ -88,19 +85,19 @@ class AntropometriChartPage extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.error_outline, size: 80, color: Colors.red),
-                  SizedBox(height: 16),
-                  Text(
+                  const Icon(Icons.error_outline, size: 80, color: Colors.red),
+                  const SizedBox(height: 16),
+                  const Text(
                     "Terjadi Kesalahan",
                     style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                         color: Colors.red),
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   Text(
                     state.error,
-                    style: TextStyle(fontSize: 14, color: Colors.grey),
+                    style: const TextStyle(fontSize: 14, color: Colors.grey),
                     textAlign: TextAlign.center,
                   ),
                 ],

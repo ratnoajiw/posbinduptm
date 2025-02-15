@@ -28,6 +28,7 @@ import 'package:posbinduptm/features/blog/data/repositories/blog_repository_impl
 import 'package:posbinduptm/features/blog/domain/repositories/blog_repository.dart';
 import 'package:posbinduptm/features/blog/domain/usecases/delete_blog.dart';
 import 'package:posbinduptm/features/blog/domain/usecases/get_all_blogs.dart';
+import 'package:posbinduptm/features/blog/domain/usecases/update_blog.dart';
 import 'package:posbinduptm/features/blog/domain/usecases/upload_blog.dart';
 import 'package:posbinduptm/features/blog/presentation/bloc/blog_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';

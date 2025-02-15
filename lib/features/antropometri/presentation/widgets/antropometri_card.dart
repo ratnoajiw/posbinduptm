@@ -16,6 +16,20 @@ class AntropometriCard extends StatelessWidget {
     required this.color,
   });
 
+  Color _getIMTColor(double imt) {
+    if (imt < 18.5) return Colors.blue;
+    if (imt >= 18.5 && imt < 25.0) return Colors.green;
+    if (imt >= 25.0 && imt < 30.0) return Colors.orange;
+    return Colors.red;
+  }
+
+  String _getIMTCategory(double imt) {
+    if (imt < 18.5) return "Berat Badan Kurang";
+    if (imt >= 18.5 && imt < 25.0) return "Ideal";
+    if (imt >= 25.0 && imt < 30.0) return "Berat Badan Lebih";
+    return "Obesitas";
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -23,14 +37,13 @@ class AntropometriCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border.all(
-          color: color.withOpacity(0.8), // **Outline mengikuti warna utama**
+          color: color.withOpacity(0.8),
           width: 1.5, // Lebar border
         ),
-        borderRadius:
-            BorderRadius.circular(12), // Sama dengan Card agar tidak aneh
+        borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.shade300, // **Bayangan sedikit berwarna**
+            color: Colors.grey.shade300,
             blurRadius: 6,
             spreadRadius: 2,
             offset: const Offset(0, 3),
@@ -43,7 +56,7 @@ class AntropometriCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // **Judul Pemeriksaan**
+              // tanggal pemeriksaan
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
@@ -60,20 +73,29 @@ class AntropometriCard extends StatelessWidget {
                 ),
               ),
               const Divider(),
-              // **Data Antropometri**
+              // data antropometri
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _buildDataRow("📏 Tinggi Badan",
-                          "${formatNumber(antropometri.tinggiBadan)} cm"),
-                      _buildDataRow("⚖️ Berat Badan",
-                          "${formatNumber(antropometri.beratBadan)} kg"),
-                      _buildDataRow("📐 Lingkar Perut",
-                          "${formatNumber(antropometri.lingkarPerut)} cm"),
-                      // **IMT + Kategorinya**
+                      Text(
+                          "📏 Tinggi Badan: ${formatNumber(antropometri.tinggiBadan)} cm"),
+                      const SizedBox(
+                        height: 2,
+                      ),
+                      Text(
+                          "⚖️ Berat Badan: ${formatNumber(antropometri.beratBadan)} kg"),
+                      const SizedBox(
+                        height: 2,
+                      ),
+                      Text(
+                          "📐 Lingkar Perut: ${formatNumber(antropometri.lingkarPerut)} cm"),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      // kategori IMT
                       Row(
                         children: [
                           Text(
@@ -110,7 +132,8 @@ class AntropometriCard extends StatelessWidget {
                   Column(
                     children: [
                       IconButton(
-                        icon: const Icon(Icons.edit, color: Colors.blue),
+                        icon:
+                            const Icon(Icons.edit_outlined, color: Colors.blue),
                         onPressed: () {
                           Navigator.push(
                             context,
@@ -127,7 +150,8 @@ class AntropometriCard extends StatelessWidget {
                         },
                       ),
                       IconButton(
-                        icon: const Icon(Icons.delete, color: Colors.red),
+                        icon: const Icon(Icons.delete_outline_outlined,
+                            color: Colors.red),
                         onPressed: onDelete,
                       ),
                     ],
@@ -139,30 +163,5 @@ class AntropometriCard extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  // Fungsi untuk membuat baris data dengan padding konsisten
-  Widget _buildDataRow(String label, String value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 2),
-      child: Text(
-        "$label: $value",
-        style: const TextStyle(fontSize: 14, color: Colors.black87),
-      ),
-    );
-  }
-
-  Color _getIMTColor(double imt) {
-    if (imt < 18.5) return Colors.blue;
-    if (imt >= 18.5 && imt < 25.0) return Colors.green;
-    if (imt >= 25.0 && imt < 30.0) return Colors.orange;
-    return Colors.red;
-  }
-
-  String _getIMTCategory(double imt) {
-    if (imt < 18.5) return "Berat Badan Kurang";
-    if (imt >= 18.5 && imt < 25.0) return "Ideal";
-    if (imt >= 25.0 && imt < 30.0) return "Berat Badan Lebih";
-    return "Obesitas";
   }
 }

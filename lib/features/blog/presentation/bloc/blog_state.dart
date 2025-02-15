@@ -20,3 +20,9 @@ final class BlogsDisplaySuccess extends BlogState {
 }
 
 final class BlogDeleteSuccess extends BlogState {}
+
+class BlogUpdateSuccess extends BlogState {
+  final BlogEntity updatedBlog;
+
+  BlogUpdateSuccess(this.updatedBlog);
+}

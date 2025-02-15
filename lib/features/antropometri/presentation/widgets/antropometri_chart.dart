@@ -1,6 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:posbinduptm/core/theme/app_pallete.dart';
 import 'package:posbinduptm/features/antropometri/domain/entities/antropometri_entity.dart';
 
 class AntropometriChart extends StatelessWidget {
@@ -92,8 +93,8 @@ class AntropometriChart extends StatelessWidget {
             lineBarsData: [
               LineChartBarData(
                 spots: spots,
-                isCurved: true,
-                color: Colors.blue,
+                isCurved: false,
+                color: AppPallete.gradientGreen3,
                 dotData: const FlDotData(show: true),
                 belowBarData: BarAreaData(show: false),
                 barWidth: 3,

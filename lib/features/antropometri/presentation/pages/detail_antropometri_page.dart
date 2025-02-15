@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:posbinduptm/core/utils/format_date.dart';
 import 'package:posbinduptm/core/utils/format_number.dart';
 import 'package:posbinduptm/features/antropometri/domain/entities/antropometri_entity.dart';
-import 'package:posbinduptm/features/antropometri/presentation/pages/antropometri_chart_page.dart';
+import 'package:posbinduptm/features/antropometri/presentation/pages/chart_antropometri_page.dart';
+import 'package:posbinduptm/features/antropometri/presentation/widgets/saran_card_antropometri.dart';
 
 class DetailAntropometriPage extends StatelessWidget {
   final AntropometriEntity antropometri;
@@ -11,6 +12,9 @@ class DetailAntropometriPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //variabel saranIMT menampung data berdasarkan IMT pasien
+    Map<String, List<String>> saranIMT = _getSaranIMT(antropometri.imtPasien);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Detail Pemeriksaan"),
@@ -22,14 +26,88 @@ class DetailAntropometriPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildTitleCard(context),
-              const SizedBox(height: 12),
-              _buildDetailSection(),
-              const SizedBox(height: 16),
-              _buildStatusCard(),
-              const SizedBox(height: 16),
-              _buildSaranSection(),
-              const SizedBox(height: 16),
+              // tanggal pemeriksaan
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                decoration: BoxDecoration(
+                  color: _getIMTColor(antropometri.imtPasien).withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(
+                  "Pemeriksaan: ${formatDateBydMMMMYYYY(antropometri.pemeriksaanAt)}",
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: _getIMTColor(antropometri.imtPasien),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
+              //hasil pemeriksaan
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: Colors.grey.shade300),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildDetailItem("Tinggi Badan",
+                        "${formatNumber(antropometri.tinggiBadan)} cm"),
+                    _buildDetailItem("Berat Badan",
+                        "${formatNumber(antropometri.beratBadan)} kg"),
+                    _buildDetailItem("Lingkar Perut",
+                        "${formatNumber(antropometri.lingkarPerut)} cm"),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 10),
+              //status IMT
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: _getIMTColor(antropometri.imtPasien).withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Row(
+                  children: [
+                    Icon(Icons.info_outline,
+                        color: _getIMTColor(antropometri.imtPasien)),
+                    const SizedBox(width: 10),
+                    Text(
+                      "Status IMT: ${_getIMTCategory(antropometri.imtPasien)}",
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: _getIMTColor(antropometri.imtPasien)),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 10),
+              //card saran
+              Column(
+                children: [
+                  SaranCardAntropometri(
+                    icon: Icons.check_circle_outline,
+                    title: "Yang Perlu Dilakukan",
+                    saran: saranIMT["Lakukan"]!,
+                    color: Colors.green,
+                  ),
+                  const SizedBox(height: 10),
+                  SaranCardAntropometri(
+                    icon: Icons.warning_amber_outlined,
+                    title: "Yang Harus Dihindari",
+                    saran: saranIMT["Hindari"]!,
+                    color: Colors.red,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              //tombol lihat grafik perkembangan
               Container(
                 width: double.infinity,
                 margin: const EdgeInsets.all(8.0),
@@ -40,7 +118,7 @@ class DetailAntropometriPage extends StatelessWidget {
                 ),
                 child: GestureDetector(
                   onTap: () {
-                    Navigator.push(context, AntropometriChartPage.route());
+                    Navigator.push(context, ChartAntropometriPage.route());
                   },
                   child: const Text(
                     "Lihat Grafik Perkembangan",
@@ -59,142 +137,16 @@ class DetailAntropometriPage extends StatelessWidget {
     );
   }
 
-  Widget _buildTitleCard(BuildContext context) {
-    Color color = _getIMTColor(antropometri.imtPasien);
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-      decoration: BoxDecoration(
-        color: color.withOpacity(0.2),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Text(
-        "Pemeriksaan: ${formatDateBydMMMMYYYY(antropometri.pemeriksaanAt)}",
-        style: TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.bold,
-          color: color,
-        ),
-      ),
-    );
-  }
-
-  Widget _buildDetailSection() {
-    return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey.shade300),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildDetailItem(
-              "Tinggi Badan", "${formatNumber(antropometri.tinggiBadan)} cm"),
-          _buildDetailItem(
-              "Berat Badan", "${formatNumber(antropometri.beratBadan)} kg"),
-          _buildDetailItem(
-              "Lingkar Perut", "${formatNumber(antropometri.lingkarPerut)} cm"),
-        ],
-      ),
-    );
-  }
-
   Widget _buildDetailItem(String title, String value) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(title,
-              style: const TextStyle(fontSize: 14, color: Colors.black87)),
+          Text(title, style: const TextStyle(fontSize: 14)),
           Text(value,
               style:
                   const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildStatusCard() {
-    Color color = _getIMTColor(antropometri.imtPasien);
-    return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: color.withOpacity(0.2),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Row(
-        children: [
-          Icon(Icons.info_outline, color: color),
-          const SizedBox(width: 10),
-          Text(
-            "Status IMT: ${_getIMTCategory(antropometri.imtPasien)}",
-            style: TextStyle(
-                fontSize: 16, fontWeight: FontWeight.bold, color: color),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildSaranSection() {
-    Map<String, List<String>> saranIMT = _getSaranIMT(antropometri.imtPasien);
-    return Column(
-      children: [
-        _buildSaranCard(Icons.check_circle_outline, "Yang Perlu Dilakukan",
-            saranIMT["Lakukan"]!, Colors.green),
-        const SizedBox(height: 10),
-        _buildSaranCard(Icons.warning_amber_outlined, "Yang Harus Dihindari",
-            saranIMT["Hindari"]!, Colors.red),
-      ],
-    );
-  }
-
-  Widget _buildSaranCard(
-    IconData icon,
-    String title,
-    List<String> saran,
-    Color color,
-  ) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(
-          color: Colors.grey.shade300,
-          width: 1.5,
-        ),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Icon(
-                icon,
-                color: color,
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              ),
-            ],
-          ),
-          const Divider(),
-          ...saran.map((item) => Padding(
-                padding: const EdgeInsets.symmetric(vertical: 2.0),
-                child: Text("• $item", style: const TextStyle(fontSize: 14)),
-              )),
         ],
       ),
     );

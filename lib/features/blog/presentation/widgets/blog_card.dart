@@ -6,21 +6,26 @@ import 'package:posbinduptm/features/blog/presentation/pages/blog_viewer_page.da
 class BlogCard extends StatelessWidget {
   final BlogEntity blog;
   final Color color;
+  final VoidCallback? onUpdated;
 
   const BlogCard({
     super.key,
     required this.blog,
     required this.color,
+    this.onUpdated,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.push(
+      onTap: () async {
+        await Navigator.push(
           context,
-          BlogViewerPage.route(blog),
+          BlogViewerPage.route(blog, onUpdated: onUpdated), // ✅ Kirim onUpdated
         );
+
+        if (!context.mounted) return;
+        onUpdated?.call(); // ✅ Perbarui daftar blog setelah kembali ke BlogPage
       },
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),

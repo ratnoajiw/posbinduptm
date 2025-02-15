@@ -24,6 +24,7 @@ class BlogEntity {
     String? content,
     List<String>? topics,
     String? imageUrl,
+    String? posterName,
   }) {
     return BlogEntity(
       title: title ?? this.title,
@@ -33,6 +34,7 @@ class BlogEntity {
       id: id,
       posterId: posterId,
       updatedAt: updatedAt,
+      posterName: posterName ?? this.posterName,
     );
   }
 }

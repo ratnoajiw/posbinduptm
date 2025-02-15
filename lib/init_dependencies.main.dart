@@ -115,6 +115,11 @@ void _initBlog() {
         serviceLocator(),
       ),
     )
+    ..registerFactory(
+      () => UpdateBlog(
+        serviceLocator(),
+      ),
+    )
 
     //Bloc
     ..registerLazySingleton(
@@ -122,6 +127,7 @@ void _initBlog() {
         uploadBlog: serviceLocator(),
         getAllBlogs: serviceLocator(),
         deleteBlog: serviceLocator(),
+        updateBlog: serviceLocator(),
       ),
     );
 }

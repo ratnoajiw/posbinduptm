@@ -5,10 +5,10 @@ import 'package:posbinduptm/features/antropometri/domain/entities/antropometri_e
 //upload (create) antropometri
 abstract interface class AntropometriRepository {
   Future<Either<Failure, AntropometriEntity>> uploadAntropometri({
+    required String posterId,
     required double tinggiBadan,
     required double beratBadan,
     required double lingkarPerut,
-    required String posterId,
     required DateTime pemeriksaanAt,
   });
 //get all (read) antropometri
