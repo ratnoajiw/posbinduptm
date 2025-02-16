@@ -142,7 +142,7 @@ class BlogRemoteDataSourceImpl implements BlogRemoteDataSource {
       final updatedData = await supabaseClient
           .from('blogs')
           .update(updateData)
-          .match({'id': blog.id, 'poster_id': blog.posterId}).select();
+          .match({'blog_id': blog.id, 'profile_id': blog.posterId}).select();
 
       return BlogModel.fromJson(updatedData.first);
     } on PostgrestException catch (e) {
@@ -159,8 +159,8 @@ class BlogRemoteDataSourceImpl implements BlogRemoteDataSource {
       final blogs = await supabaseClient
           .from('blogs')
           .select('*')
-          .eq('id', blogId)
-          .eq('poster_id', posterId)
+          .eq('blog_id', blogId)
+          .eq('profile_id', posterId)
           .limit(1);
 
       if (blogs.isEmpty) return null;
@@ -173,9 +173,15 @@ class BlogRemoteDataSourceImpl implements BlogRemoteDataSource {
   @override
   Future<void> deleteBlog(String blogId) async {
     try {
+      // 🔹 Hapus gambar blog dulu sebelum hapus blog dari database
+      await deleteBlogImage(blogId);
+
+      // 🔹 Hapus blog dari database
       await supabaseClient.from('blogs').delete().match({
-        'id': blogId,
+        'blog_id': blogId,
       });
+
+      debugPrint("✅ Blog dan gambarnya berhasil dihapus.");
     } on PostgrestException catch (e) {
       throw ServerException(e.message);
     }
@@ -187,7 +193,7 @@ class BlogRemoteDataSourceImpl implements BlogRemoteDataSource {
       final blogs = await supabaseClient
           .from('blogs')
           .select('*, profiles(name)')
-          .eq('poster_id', posterId);
+          .eq('profile_id', posterId);
 
       return blogs.map((blog) {
         return BlogModel.fromJson(blog).copyWith(

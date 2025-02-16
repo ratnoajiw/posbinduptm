@@ -14,8 +14,8 @@ class BlogModel extends BlogEntity {
 
   factory BlogModel.fromJson(Map<String, dynamic> map) {
     return BlogModel(
-      id: map['id'] as String,
-      posterId: map['poster_id'] as String,
+      id: map['blog_id'] as String,
+      posterId: map['profile_id'] as String,
       title: map['title'] as String,
       content: map['content'] as String,
       imageUrl: map['image_url'] as String,
@@ -29,8 +29,8 @@ class BlogModel extends BlogEntity {
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'id': id,
-      'poster_id': posterId,
+      'blog_id': id,
+      'profile_id': posterId,
       'title': title,
       'content': content,
       'image_url': imageUrl,

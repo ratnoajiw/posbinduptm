@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:posbinduptm/core/theme/app_pallete.dart';
 
 class CustomDeleteDialog extends StatelessWidget {
   final String title;
@@ -20,7 +21,8 @@ class CustomDeleteDialog extends StatelessWidget {
       ),
       title: Column(
         children: [
-          const Icon(Icons.warning_amber_rounded, color: Colors.red, size: 50),
+          const Icon(Icons.warning_amber_rounded,
+              color: AppPallete.gradientGreen1, size: 50),
           const SizedBox(height: 10),
           Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
         ],
@@ -44,7 +46,7 @@ class CustomDeleteDialog extends StatelessWidget {
         ),
         ElevatedButton(
           style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.red,
+            backgroundColor: AppPallete.gradientGreen1,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),
             ),

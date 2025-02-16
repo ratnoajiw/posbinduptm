@@ -68,6 +68,11 @@ class _AddNewBlogPageState extends State<AddNewBlogPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: const Text(
+          "Tambah Artikel",
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+        ),
+        centerTitle: true,
         actions: [
           IconButton(
             onPressed: () {
@@ -119,7 +124,7 @@ class _AddNewBlogPageState extends State<AddNewBlogPage> {
                               selectImage();
                             },
                             child: DottedBorder(
-                              color: AppPallete.borderColor,
+                              color: AppPallete.gradientGreen1,
                               dashPattern: const [20, 4],
                               radius: const Radius.circular(10),
                               borderType: BorderType.RRect,
@@ -131,14 +136,15 @@ class _AddNewBlogPageState extends State<AddNewBlogPage> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Icon(
-                                      Icons.folder_open,
+                                      Icons.image_outlined,
                                       size: 40,
+                                      color: AppPallete.gradientGreen1,
                                     ),
                                     SizedBox(
                                       height: 15,
                                     ),
                                     Text(
-                                      'Select your image',
+                                      'Upload Gambar Artikel',
                                       style: TextStyle(fontSize: 15),
                                     )
                                   ],
@@ -198,14 +204,14 @@ class _AddNewBlogPageState extends State<AddNewBlogPage> {
                     ),
                     BlogFieldEditor(
                       controller: titleController,
-                      hintText: 'Blog Title',
+                      hintText: 'Judul',
                     ),
                     const SizedBox(
                       height: 10,
                     ),
                     BlogFieldEditor(
                       controller: contentController,
-                      hintText: 'Blog Content',
+                      hintText: 'Konten',
                     ),
                   ],
                 ),

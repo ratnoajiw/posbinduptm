@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:posbinduptm/core/theme/app_pallete.dart';
 
 class CustomLogoutDialog extends StatelessWidget {
   final VoidCallback onConfirm;
@@ -16,7 +17,7 @@ class CustomLogoutDialog extends StatelessWidget {
       actionsPadding: const EdgeInsets.only(bottom: 16, right: 16),
       title: const Row(
         children: [
-          Icon(Icons.logout, color: Colors.red, size: 28),
+          Icon(Icons.logout, color: AppPallete.gradientGreen1, size: 28),
           SizedBox(width: 12), // Beri jarak lebih nyaman
           Expanded(
             child: Text(
@@ -37,7 +38,7 @@ class CustomLogoutDialog extends StatelessWidget {
         TextButton(
           onPressed: () => Navigator.pop(context),
           style: TextButton.styleFrom(
-            foregroundColor: Colors.grey,
+            foregroundColor: Colors.black54,
             textStyle: const TextStyle(fontSize: 16),
           ),
           child: const Text("Batal"),
@@ -48,7 +49,7 @@ class CustomLogoutDialog extends StatelessWidget {
             onConfirm(); // Eksekusi logout
           },
           style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.redAccent,
+            backgroundColor: AppPallete.gradientGreen1,
             foregroundColor: Colors.white,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),

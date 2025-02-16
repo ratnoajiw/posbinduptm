@@ -99,6 +99,11 @@ class _UpdateBlogPageState extends State<UpdateBlogPage> {
 
     return Scaffold(
       appBar: AppBar(
+        title: const Text(
+          "Edit Artikel",
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+        ),
+        centerTitle: true,
         actions: [
           IconButton(
             onPressed: updateBlog,

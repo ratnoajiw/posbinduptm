@@ -38,7 +38,7 @@ class AntropometriRemoteDataSourceImpl implements AntropometriRemoteDataSource {
       final antropometries = await supabaseClient
           .from('antropometri')
           .select('*, profiles(name)')
-          .eq('poster_id', posterId)
+          .eq('profile_id', posterId)
           .order('pemeriksaan_at', ascending: false);
 
       return antropometries.map((antropometri) {
@@ -82,7 +82,7 @@ class AntropometriRemoteDataSourceImpl implements AntropometriRemoteDataSource {
         'lingkar_perut': lingkarPerut,
         'pemeriksaan_at': pemeriksaanAt.toIso8601String(),
         'updated_at': DateTime.now().toIso8601String(),
-      }).eq('id', id);
+      }).eq('antropometri_id', id);
     } on PostgrestException catch (e) {
       throw ServerException(e.message);
     }
@@ -94,7 +94,7 @@ class AntropometriRemoteDataSourceImpl implements AntropometriRemoteDataSource {
       await supabaseClient
           .from('antropometri')
           .delete()
-          .match({'id': antropometriId});
+          .match({'antropometri_id': antropometriId});
     } on PostgrestException catch (e) {
       throw ServerException(e.message);
     }

@@ -33,6 +33,19 @@ class _BlogViewerPageState extends State<BlogViewerPage> {
     blog = widget.blog;
   }
 
+  void _showDeleteDialog(BuildContext context, String blogId) {
+    showDialog(
+      context: context,
+      builder: (ctx) => CustomDeleteDialog(
+        title: "Hapus Artikel",
+        content: "Apakah Anda yakin ingin menghapus artikel ini?",
+        onConfirm: () {
+          context.read<BlogBloc>().add(BlogDelete(blogId: blogId));
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<BlogBloc, BlogState>(
@@ -49,10 +62,8 @@ class _BlogViewerPageState extends State<BlogViewerPage> {
 
         return Scaffold(
           appBar: AppBar(
-            backgroundColor: AppPallete.whiteColor,
-            elevation: 0,
             title: const Text(
-              "Detail Blog",
+              "Detail Artikel",
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
             ),
             centerTitle: true,
@@ -148,19 +159,6 @@ class _BlogViewerPageState extends State<BlogViewerPage> {
           ),
         );
       },
-    );
-  }
-
-  void _showDeleteDialog(BuildContext context, String blogId) {
-    showDialog(
-      context: context,
-      builder: (ctx) => CustomDeleteDialog(
-        title: "Hapus Blog",
-        content: "Apakah Anda yakin ingin menghapus blog ini?",
-        onConfirm: () {
-          context.read<BlogBloc>().add(BlogDelete(blogId: blogId));
-        },
-      ),
     );
   }
 }

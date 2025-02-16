@@ -15,8 +15,8 @@ class AntropometriModel extends AntropometriEntity {
 
   factory AntropometriModel.fromJson(Map<String, dynamic> map) {
     return AntropometriModel(
-        id: map['id'] as String,
-        posterId: map['poster_id'] as String,
+        id: map['antropometri_id'] as String,
+        posterId: map['profile_id'] as String,
         tinggiBadan: map['tinggi_badan'].toDouble(),
         beratBadan: map['berat_badan'].toDouble(),
         lingkarPerut: map['lingkar_perut'].toDouble(),
@@ -30,8 +30,8 @@ class AntropometriModel extends AntropometriEntity {
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'id': id,
-      'poster_id': posterId,
+      'antropometri_id': id,
+      'profile_id': posterId,
       'tinggi_badan': tinggiBadan,
       'berat_badan': beratBadan,
       'lingkar_perut': lingkarPerut,

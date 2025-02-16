@@ -64,10 +64,10 @@ class AppDrawer extends StatelessWidget {
 
             // **LOGOUT BUTTON**
             ListTile(
-              leading: const Icon(Icons.logout, color: Colors.red),
+              leading: const Icon(Icons.logout, color: Colors.black54),
               title: const Text(
                 'Logout',
-                style: TextStyle(color: Colors.red),
+                style: TextStyle(color: Colors.black54),
               ),
               onTap: () => _showLogoutDialog(context),
             ),
