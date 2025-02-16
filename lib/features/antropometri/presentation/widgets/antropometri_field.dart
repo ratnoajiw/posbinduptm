@@ -36,6 +36,11 @@ class AntropometriField extends StatelessWidget {
             : null,
         suffixText: suffixText,
         suffixStyle: const TextStyle(color: Colors.grey),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
       ),
       readOnly: readOnly,
       onTap: onTap,

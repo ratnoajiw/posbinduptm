@@ -39,7 +39,7 @@ class GulaDarahField extends StatelessWidget {
           borderRadius: BorderRadius.circular(8.0),
         ),
         contentPadding:
-            const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
       ),
       readOnly: readOnly,
       onTap: onTap,

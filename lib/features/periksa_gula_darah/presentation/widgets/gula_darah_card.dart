@@ -38,7 +38,7 @@ class GulaDarahCard extends StatelessWidget {
         color: Colors.white,
         border: Border.all(
           color: color,
-          width: 2,
+          width: 1.5,
         ),
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
