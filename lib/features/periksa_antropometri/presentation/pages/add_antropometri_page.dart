@@ -1,28 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:intl/intl.dart';
 import 'package:posbinduptm/core/common/cubits/app_user/app_user_cubit.dart';
 import 'package:posbinduptm/core/common/widgets/loader.dart';
 import 'package:posbinduptm/core/utils/custom_date_picker.dart';
-import 'package:posbinduptm/core/utils/custom_time_picker.dart';
 import 'package:posbinduptm/core/utils/show_snackbar.dart';
-import 'package:posbinduptm/features/periksa_gula_darah/presentation/bloc/gula_darah_bloc.dart';
-import 'package:posbinduptm/features/periksa_gula_darah/presentation/pages/gula_darah_page.dart';
-import 'package:posbinduptm/features/periksa_gula_darah/presentation/widgets/gula_darah_field.dart';
+import 'package:posbinduptm/core/utils/custom_time_picker.dart';
+import 'package:posbinduptm/features/periksa_antropometri/presentation/bloc/antropometri_bloc.dart';
+import 'package:posbinduptm/features/periksa_antropometri/presentation/pages/antropometri_page.dart';
+import 'package:posbinduptm/features/periksa_antropometri/presentation/widgets/antropometri_field.dart';
 
-class AddGulaDarahPage extends StatefulWidget {
+class AddAntropometriPage extends StatefulWidget {
   static route() => MaterialPageRoute(
-        builder: (context) => const AddGulaDarahPage(),
+        builder: (context) => const AddAntropometriPage(),
       );
 
-  const AddGulaDarahPage({super.key});
+  const AddAntropometriPage({super.key});
 
   @override
-  State<AddGulaDarahPage> createState() => _AddGulaDarahPageState();
+  State<AddAntropometriPage> createState() => _AddAntropometriPageState();
 }
 
-class _AddGulaDarahPageState extends State<AddGulaDarahPage> {
-  final gulaDarahController = TextEditingController();
+class _AddAntropometriPageState extends State<AddAntropometriPage> {
+  final tinggiBadanController = TextEditingController();
+  final beratBadanController = TextEditingController();
+  final lingkarPerutController = TextEditingController();
   final TextEditingController tanggalController = TextEditingController();
   final TextEditingController waktuController = TextEditingController();
 
@@ -46,9 +49,9 @@ class _AddGulaDarahPageState extends State<AddGulaDarahPage> {
     }
   }
 
-  void uploadGulaDarah() {
+  void uploadAntropometri() {
     if (formKey.currentState!.validate()) {
-      final profileId =
+      final posterId =
           (context.read<AppUserCubit>().state as AppUserLoggedIn).user.id;
 
       if (tanggalController.text.isEmpty || waktuController.text.isEmpty) {
@@ -57,14 +60,17 @@ class _AddGulaDarahPageState extends State<AddGulaDarahPage> {
       }
 
       try {
+        // Format dan parsing tanggal + waktu
         final DateTime pemeriksaanAt = DateFormat("dd/MM/yyyy HH:mm")
             .parse("${tanggalController.text} ${waktuController.text}");
 
-        context.read<PeriksaGulaDarahBloc>().add(
-              PeriksaGulaDarahUpload(
-                profileId: profileId,
+        context.read<AntropometriBloc>().add(
+              AntropometriUpload(
+                posterId: posterId,
                 updateAt: DateTime.now().toIso8601String(),
-                gulaDarahSewaktu: double.parse(gulaDarahController.text.trim()),
+                tinggiBadan: double.parse(tinggiBadanController.text.trim()),
+                beratBadan: double.parse(beratBadanController.text.trim()),
+                lingkarPerut: double.parse(lingkarPerutController.text.trim()),
                 pemeriksaanAt: pemeriksaanAt,
               ),
             );
@@ -76,9 +82,9 @@ class _AddGulaDarahPageState extends State<AddGulaDarahPage> {
 
   @override
   void dispose() {
-    gulaDarahController.dispose();
-    tanggalController.dispose();
-    waktuController.dispose();
+    tinggiBadanController.dispose();
+    beratBadanController.dispose();
+    lingkarPerutController.dispose();
     super.dispose();
   }
 
@@ -86,30 +92,30 @@ class _AddGulaDarahPageState extends State<AddGulaDarahPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Tambah Pemeriksaan',
+        title: const Text('Tambah Antropometri',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
         centerTitle: true,
         actions: [
           IconButton(
-            onPressed: uploadGulaDarah,
+            onPressed: uploadAntropometri,
             icon: const Icon(Icons.done_rounded),
           ),
         ],
       ),
-      body: BlocConsumer<PeriksaGulaDarahBloc, PeriksaGulaDarahState>(
+      body: BlocConsumer<AntropometriBloc, AntropometriState>(
         listener: (context, state) {
-          if (state is PeriksaGulaDarahFailure) {
+          if (state is AntropometriFailure) {
             showSnackBar(context, state.error);
-          } else if (state is PeriksaGulaDarahUploadSuccess) {
+          } else if (state is AntropometriUploadSuccess) {
             Navigator.pushAndRemoveUntil(
               context,
-              PeriksaGulaDarahPage.route(),
+              AntropometriPage.route(),
               (route) => false,
             );
           }
         },
         builder: (context, state) {
-          if (state is PeriksaGulaDarahLoading) {
+          if (state is AntropometriLoading) {
             return const Loader();
           }
           return SingleChildScrollView(
@@ -123,35 +129,57 @@ class _AddGulaDarahPageState extends State<AddGulaDarahPage> {
                     Text("Tanggal Periksa",
                         style: Theme.of(context).textTheme.titleMedium),
                     const SizedBox(height: 10),
-                    GulaDarahField(
+                    AntropometriField(
                       controller: tanggalController,
+
                       hintText: 'Pilih tanggal',
                       keyboardType: TextInputType.none,
                       readOnly: true,
                       onTap: () => _pickTanggal(context),
-                      suffixIcon: Icons.calendar_today,
+                      suffixIcon: Icons.calendar_today, // Ikon kalender
                     ),
                     const SizedBox(height: 10),
                     Text("Waktu Periksa",
                         style: Theme.of(context).textTheme.titleMedium),
                     const SizedBox(height: 10),
-                    GulaDarahField(
+                    AntropometriField(
                       controller: waktuController,
+
                       hintText: 'Pilih waktu',
                       keyboardType: TextInputType.none,
                       readOnly: true,
                       onTap: () => _pickWaktu(context),
-                      suffixIcon: Icons.access_time,
+                      suffixIcon: Icons.access_time, // Ikon jam
                     ),
                     const SizedBox(height: 10),
-                    Text("Gula Darah Sewaktu",
+                    Text("Tinggi Badan",
                         style: Theme.of(context).textTheme.titleMedium),
                     const SizedBox(height: 10),
-                    GulaDarahField(
-                      controller: gulaDarahController,
-                      hintText: 'Contoh: 110 (mg/dL)',
+                    AntropometriField(
+                      controller: tinggiBadanController,
+                      hintText: 'Contoh: 150 (cm)',
                       keyboardType: TextInputType.number,
-                      suffixText: 'mg/dL',
+                      suffixText: 'cm',
+                    ),
+                    const SizedBox(height: 10),
+                    Text("Berat Badan",
+                        style: Theme.of(context).textTheme.titleMedium),
+                    const SizedBox(height: 10),
+                    AntropometriField(
+                      controller: beratBadanController,
+                      hintText: 'Contoh: 50 (kg)',
+                      keyboardType: TextInputType.number,
+                      suffixText: 'kg',
+                    ),
+                    const SizedBox(height: 10),
+                    Text("Lingkar Perut",
+                        style: Theme.of(context).textTheme.titleMedium),
+                    const SizedBox(height: 10),
+                    AntropometriField(
+                      controller: lingkarPerutController,
+                      hintText: 'Contoh: 40 (cm)',
+                      suffixText: 'cm',
+                      keyboardType: TextInputType.number,
                     ),
                   ],
                 ),

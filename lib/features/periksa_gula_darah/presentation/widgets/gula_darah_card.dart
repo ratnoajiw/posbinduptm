@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:posbinduptm/core/utils/format_date.dart';
 import 'package:posbinduptm/core/utils/format_number.dart';
-import 'package:posbinduptm/features/periksa_gula_darah/domain/entities/periksa_gula_darah_entity.dart';
+import 'package:posbinduptm/features/periksa_gula_darah/domain/entities/gula_darah_entity.dart';
 import 'package:posbinduptm/features/periksa_gula_darah/presentation/pages/update_gula_darah_page.dart';
 
 class GulaDarahCard extends StatelessWidget {
@@ -57,7 +57,7 @@ class GulaDarahCard extends StatelessWidget {
           children: [
             // **Tanggal Pemeriksaan**
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
               decoration: BoxDecoration(
                 color: color.withOpacity(0.2),
                 borderRadius: BorderRadius.circular(8),
@@ -83,7 +83,7 @@ class GulaDarahCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      "Gula Darah",
+                      "Gula Darah Sewaktu",
                       style: TextStyle(fontSize: 14, color: Colors.black),
                     ),
                     Text(

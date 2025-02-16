@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:posbinduptm/features/periksa_antropometri/domain/entities/antropometri_entity.dart';
+import 'package:posbinduptm/features/periksa_antropometri/presentation/widgets/antropometri_chart.dart';
+import 'package:posbinduptm/features/periksa_antropometri/presentation/bloc/antropometri_bloc.dart';
 import 'package:posbinduptm/core/common/widgets/loader.dart';
-import 'package:posbinduptm/features/periksa_gula_darah/domain/entities/gula_darah_entity.dart';
-import 'package:posbinduptm/features/periksa_gula_darah/presentation/bloc/gula_darah_bloc.dart';
-import 'package:posbinduptm/features/periksa_gula_darah/presentation/widgets/gula_darah_chart.dart';
 
-class ChartGulaDarahPage extends StatelessWidget {
+class ChartAntropometriPage extends StatelessWidget {
   static route() => MaterialPageRoute(
-        builder: (context) => const ChartGulaDarahPage(),
+        builder: (context) => const ChartAntropometriPage(),
       );
 
-  const ChartGulaDarahPage({super.key});
+  const ChartAntropometriPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,20 +20,19 @@ class ChartGulaDarahPage extends StatelessWidget {
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
         centerTitle: true,
       ),
-      body: BlocBuilder<PeriksaGulaDarahBloc, PeriksaGulaDarahState>(
+      body: BlocBuilder<AntropometriBloc, AntropometriState>(
         builder: (context, state) {
-          if (state is PeriksaGulaDarahLoading) {
+          if (state is AntropometriLoading) {
             return const Loader();
-          } else if (state is PeriksaGulaDarahDisplaySuccess) {
-            final List<PeriksaGulaDarahEntity> data =
-                state.periksaGulaDarahList;
+          } else if (state is AntropometrisDisplaySuccess) {
+            final List<AntropometriEntity> data = state.antropometriList;
 
             if (data.isEmpty) {
               return const Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.show_chart, size: 80, color: Colors.grey),
+                    Icon(Icons.bar_chart, size: 80, color: Colors.grey),
                     SizedBox(height: 16),
                     Text(
                       "Belum ada data yang tersedia",
@@ -43,7 +41,7 @@ class ChartGulaDarahPage extends StatelessWidget {
                     ),
                     SizedBox(height: 8),
                     Text(
-                      "Silakan tambahkan data pemeriksaan gula darah terlebih dahulu.",
+                      "Silakan tambahkan data antropometri terlebih dahulu.",
                       style: TextStyle(fontSize: 14, color: Colors.grey),
                       textAlign: TextAlign.center,
                     ),
@@ -64,18 +62,18 @@ class ChartGulaDarahPage extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           const Text(
-                            "Grafik Kadar Gula Darah dalam 6 Bulan Terakhir",
+                            "Grafik Berat Badan dalam 6 Bulan Terakhir",
                             style: TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(height: 8),
                           const Text(
-                            "Grafik ini menunjukkan perubahan kadar gula darah sewaktu dalam beberapa bulan terakhir. Rutin lakukan pemeriksaan untuk memantau kondisi kesehatan Anda.",
+                            "Grafik ini menunjukkan perkembangan berat badan Anda dalam beberapa bulan terakhir. Pastikan untuk rutin memperbarui data agar dapat memantau perubahan dengan lebih baik.",
                             style: TextStyle(fontSize: 14, color: Colors.grey),
                             textAlign: TextAlign.center,
                           ),
                           const SizedBox(height: 16),
-                          GulaDarahChart(data: data),
+                          AntropometriChart(data: data),
                         ],
                       ),
                     ),
@@ -83,7 +81,7 @@ class ChartGulaDarahPage extends StatelessWidget {
                 ],
               ),
             );
-          } else if (state is PeriksaGulaDarahFailure) {
+          } else if (state is AntropometriFailure) {
             return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,

@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:posbinduptm/core/common/cubits/app_user/app_user_cubit.dart';
 import 'package:posbinduptm/core/theme/theme.dart';
-import 'package:posbinduptm/features/antropometri/presentation/bloc/antropometri_bloc.dart';
-import 'package:posbinduptm/features/antropometri/presentation/pages/antropometri_page.dart';
+import 'package:posbinduptm/features/periksa_antropometri/presentation/bloc/antropometri_bloc.dart';
+import 'package:posbinduptm/features/periksa_antropometri/presentation/pages/antropometri_page.dart';
 import 'package:posbinduptm/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:posbinduptm/features/auth/presentation/pages/login_page.dart';
 import 'package:posbinduptm/features/blog/presentation/bloc/blog_bloc.dart';
 import 'package:posbinduptm/features/blog/presentation/pages/blog_page.dart';
-import 'package:posbinduptm/features/periksa_gula_darah/presentation/bloc/periksa_gula_darah_bloc.dart';
-import 'package:posbinduptm/features/periksa_gula_darah/presentation/pages/periksa_gula_darah_page.dart';
+import 'package:posbinduptm/features/periksa_gula_darah/presentation/bloc/gula_darah_bloc.dart';
+import 'package:posbinduptm/features/periksa_gula_darah/presentation/pages/gula_darah_page.dart';
 import 'package:posbinduptm/init_dependencies.dart';
 
 /// Fungsi utama aplikasi

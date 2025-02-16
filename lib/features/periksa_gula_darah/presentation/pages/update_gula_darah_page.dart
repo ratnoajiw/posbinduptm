@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:posbinduptm/core/utils/custom_date_picker.dart';
 import 'package:posbinduptm/core/utils/custom_time_picker.dart';
-import 'package:posbinduptm/features/periksa_gula_darah/presentation/bloc/periksa_gula_darah_bloc.dart';
+import 'package:posbinduptm/features/periksa_gula_darah/presentation/bloc/gula_darah_bloc.dart';
 import 'package:posbinduptm/features/periksa_gula_darah/presentation/widgets/gula_darah_field.dart';
 
 class UpdateGulaDarahPage extends StatefulWidget {
