@@ -32,7 +32,7 @@ class _AntropometriPageState extends State<AntropometriPage> {
       final posterId = state.user.id;
       context
           .read<AntropometriBloc>()
-          .add(AntropometriGetAllAntropometris(posterId: posterId));
+          .add(AntropometriGetAllAntropometriList(posterId: posterId));
     }
   }
 
@@ -62,14 +62,16 @@ class _AntropometriPageState extends State<AntropometriPage> {
           final userState = context.read<AppUserCubit>().state;
           if (userState is AppUserLoggedIn) {
             context.read<AntropometriBloc>().add(
-                  AntropometriGetAllAntropometris(posterId: userState.user.id),
+                  AntropometriGetAllAntropometriList(
+                      posterId: userState.user.id),
                 );
           }
         } else if (state is AntropometriUpdateSuccess) {
           final userState = context.read<AppUserCubit>().state;
           if (userState is AppUserLoggedIn) {
             context.read<AntropometriBloc>().add(
-                  AntropometriGetAllAntropometris(posterId: userState.user.id),
+                  AntropometriGetAllAntropometriList(
+                      posterId: userState.user.id),
                 );
           }
         }
@@ -97,7 +99,7 @@ class _AntropometriPageState extends State<AntropometriPage> {
               // 🔥 Tambahkan kondisi ini
               final List<AntropometriEntity> antropometriList =
                   state is AntropometrisDisplaySuccess
-                      ? state.antropometris
+                      ? state.antropometriList
                       : []; // Gunakan list kosong jika state belum diperbarui
 
               if (antropometriList.isEmpty) {

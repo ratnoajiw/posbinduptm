@@ -15,8 +15,8 @@ final class AntropometriFailure extends AntropometriState {
 final class AntropometriUploadSuccess extends AntropometriState {}
 
 final class AntropometrisDisplaySuccess extends AntropometriState {
-  final List<AntropometriEntity> antropometris;
-  AntropometrisDisplaySuccess(this.antropometris);
+  final List<AntropometriEntity> antropometriList;
+  AntropometrisDisplaySuccess(this.antropometriList);
 }
 
 final class AntropometriDeleteSuccess extends AntropometriState {}

@@ -1,37 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:posbinduptm/features/antropometri/domain/entities/antropometri_entity.dart';
-import 'package:posbinduptm/features/antropometri/presentation/widgets/antropometri_chart.dart';
-import 'package:posbinduptm/features/antropometri/presentation/bloc/antropometri_bloc.dart';
-import 'package:posbinduptm/core/common/widgets/loader.dart';
 
-class ChartAntropometriPage extends StatelessWidget {
+import 'package:posbinduptm/core/common/widgets/loader.dart';
+import 'package:posbinduptm/features/periksa_gula_darah/domain/entities/periksa_gula_darah_entity.dart';
+import 'package:posbinduptm/features/periksa_gula_darah/presentation/bloc/periksa_gula_darah_bloc.dart';
+import 'package:posbinduptm/features/periksa_gula_darah/presentation/widgets/gula_darah_chart.dart';
+
+class ChartGulaDarahPage extends StatelessWidget {
   static route() => MaterialPageRoute(
-        builder: (context) => const ChartAntropometriPage(),
+        builder: (context) => const ChartGulaDarahPage(),
       );
 
-  const ChartAntropometriPage({super.key});
+  const ChartGulaDarahPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Grafik Perkembangan"),
+        title: const Text("Grafik Perkembangan",
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
         centerTitle: true,
       ),
-      body: BlocBuilder<AntropometriBloc, AntropometriState>(
+      body: BlocBuilder<PeriksaGulaDarahBloc, PeriksaGulaDarahState>(
         builder: (context, state) {
-          if (state is AntropometriLoading) {
+          if (state is PeriksaGulaDarahLoading) {
             return const Loader();
-          } else if (state is AntropometrisDisplaySuccess) {
-            final List<AntropometriEntity> data = state.antropometriList;
+          } else if (state is PeriksaGulaDarahDisplaySuccess) {
+            final List<PeriksaGulaDarahEntity> data =
+                state.periksaGulaDarahList;
 
             if (data.isEmpty) {
               return const Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.bar_chart, size: 80, color: Colors.grey),
+                    Icon(Icons.show_chart, size: 80, color: Colors.grey),
                     SizedBox(height: 16),
                     Text(
                       "Belum ada data yang tersedia",
@@ -40,7 +43,7 @@ class ChartAntropometriPage extends StatelessWidget {
                     ),
                     SizedBox(height: 8),
                     Text(
-                      "Silakan tambahkan data antropometri terlebih dahulu.",
+                      "Silakan tambahkan data pemeriksaan gula darah terlebih dahulu.",
                       style: TextStyle(fontSize: 14, color: Colors.grey),
                       textAlign: TextAlign.center,
                     ),
@@ -61,18 +64,18 @@ class ChartAntropometriPage extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           const Text(
-                            "Grafik Berat Badan dalam 6 Bulan Terakhir",
+                            "Grafik Kadar Gula Darah dalam 6 Bulan Terakhir",
                             style: TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(height: 8),
                           const Text(
-                            "Grafik ini menunjukkan perkembangan berat badan Anda dalam beberapa bulan terakhir. Pastikan untuk rutin memperbarui data agar dapat memantau perubahan dengan lebih baik.",
+                            "Grafik ini menunjukkan perubahan kadar gula darah sewaktu dalam beberapa bulan terakhir. Rutin lakukan pemeriksaan untuk memantau kondisi kesehatan Anda.",
                             style: TextStyle(fontSize: 14, color: Colors.grey),
                             textAlign: TextAlign.center,
                           ),
                           const SizedBox(height: 16),
-                          AntropometriChart(data: data),
+                          GulaDarahChart(data: data),
                         ],
                       ),
                     ),
@@ -80,7 +83,7 @@ class ChartAntropometriPage extends StatelessWidget {
                 ],
               ),
             );
-          } else if (state is AntropometriFailure) {
+          } else if (state is PeriksaGulaDarahFailure) {
             return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,

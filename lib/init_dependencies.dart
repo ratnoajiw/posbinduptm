@@ -13,7 +13,6 @@ import 'package:posbinduptm/features/antropometri/domain/usecases/get_all_antrop
 import 'package:posbinduptm/features/antropometri/domain/usecases/update_antropometri.dart';
 import 'package:posbinduptm/features/antropometri/domain/usecases/upload_antropometri.dart';
 import 'package:posbinduptm/features/antropometri/presentation/bloc/antropometri_bloc.dart';
-
 import 'package:posbinduptm/features/auth/data/datasources/auth_remote_data_source.dart';
 import 'package:posbinduptm/features/auth/data/repositories/auth_repository_impl.dart';
 import 'package:posbinduptm/features/auth/domain/repositories/auth_repository.dart';
@@ -31,6 +30,14 @@ import 'package:posbinduptm/features/blog/domain/usecases/get_all_blogs.dart';
 import 'package:posbinduptm/features/blog/domain/usecases/update_blog.dart';
 import 'package:posbinduptm/features/blog/domain/usecases/upload_blog.dart';
 import 'package:posbinduptm/features/blog/presentation/bloc/blog_bloc.dart';
+import 'package:posbinduptm/features/periksa_gula_darah/data/datasource/periksa_gula_darah_remote_data_source.dart';
+import 'package:posbinduptm/features/periksa_gula_darah/data/repository/periksa_gula_darah_repository_impl.dart';
+import 'package:posbinduptm/features/periksa_gula_darah/domain/repository/periksa_gula_darah_repository.dart';
+import 'package:posbinduptm/features/periksa_gula_darah/domain/usecases/delete_periksa_gula_darah.dart';
+import 'package:posbinduptm/features/periksa_gula_darah/domain/usecases/get_all_periksa_gula_darah.dart';
+import 'package:posbinduptm/features/periksa_gula_darah/domain/usecases/update_periksa_gula_darah.dart';
+import 'package:posbinduptm/features/periksa_gula_darah/domain/usecases/upload_periksa_gula_darah.dart';
+import 'package:posbinduptm/features/periksa_gula_darah/presentation/bloc/periksa_gula_darah_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 part 'init_dependencies.main.dart';

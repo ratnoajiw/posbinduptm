@@ -28,7 +28,7 @@ class AntropometriBloc extends Bloc<AntropometriEvent, AntropometriState> {
         super(AntropometriInitial()) {
     on<AntropometriEvent>((event, emit) => emit(AntropometriLoading()));
     on<AntropometriUpload>(_onUploadAntropometri);
-    on<AntropometriGetAllAntropometris>(_onGetAllAntropometris);
+    on<AntropometriGetAllAntropometriList>(_onGetAllAntropometris);
     on<AntropometriDelete>(_onDeleteAntropometri);
     on<AntropometriUpdate>(_onUpdateAntropometri);
   }
@@ -51,7 +51,7 @@ class AntropometriBloc extends Bloc<AntropometriEvent, AntropometriState> {
     );
   }
 
-  void _onGetAllAntropometris(AntropometriGetAllAntropometris event,
+  void _onGetAllAntropometris(AntropometriGetAllAntropometriList event,
       Emitter<AntropometriState> emit) async {
     final res = await _getAllAntropometri(
         GetAllAntropometriParams(posterId: event.posterId));

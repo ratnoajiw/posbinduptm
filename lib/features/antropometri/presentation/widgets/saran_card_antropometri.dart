@@ -48,10 +48,18 @@ class SaranCardAntropometri extends StatelessWidget {
             ],
           ),
           const Divider(),
-          ...saran.map((item) => Padding(
-                padding: const EdgeInsets.symmetric(vertical: 2.0),
-                child: Text("• $item", style: const TextStyle(fontSize: 14)),
-              )),
+          for (String item in saran)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 2),
+              child: Row(
+                children: [
+                  const Icon(Icons.circle, size: 6, color: Colors.black),
+                  const SizedBox(width: 6),
+                  Expanded(
+                      child: Text(item, style: const TextStyle(fontSize: 14))),
+                ],
+              ),
+            ),
         ],
       ),
     );

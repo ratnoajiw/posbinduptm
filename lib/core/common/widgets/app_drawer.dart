@@ -47,17 +47,27 @@ class AppDrawer extends StatelessWidget {
 
             // **MENU ITEMS**
             ListTile(
-              leading: const Icon(Icons.article, color: Colors.black54),
+              leading:
+                  const Icon(Icons.article_outlined, color: Colors.black54),
               title: const Text('Blog'),
               onTap: () {
                 Navigator.pushReplacementNamed(context, '/blog');
               },
             ),
             ListTile(
-              leading: const Icon(Icons.monitor_weight, color: Colors.black54),
+              leading: const Icon(Icons.monitor_weight_outlined,
+                  color: Colors.black54),
               title: const Text('Antropometri'),
               onTap: () {
                 Navigator.pushReplacementNamed(context, '/antropometri');
+              },
+            ),
+            ListTile(
+              leading:
+                  const Icon(Icons.bloodtype_outlined, color: Colors.black54),
+              title: const Text('Gula Darah'),
+              onTap: () {
+                Navigator.pushReplacementNamed(context, '/periksa_guladarah');
               },
             ),
             const Divider(),

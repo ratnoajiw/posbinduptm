@@ -8,6 +8,8 @@ import 'package:posbinduptm/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:posbinduptm/features/auth/presentation/pages/login_page.dart';
 import 'package:posbinduptm/features/blog/presentation/bloc/blog_bloc.dart';
 import 'package:posbinduptm/features/blog/presentation/pages/blog_page.dart';
+import 'package:posbinduptm/features/periksa_gula_darah/presentation/bloc/periksa_gula_darah_bloc.dart';
+import 'package:posbinduptm/features/periksa_gula_darah/presentation/pages/periksa_gula_darah_page.dart';
 import 'package:posbinduptm/init_dependencies.dart';
 
 /// Fungsi utama aplikasi
@@ -39,6 +41,9 @@ void main() async {
       BlocProvider(
         create: (_) => serviceLocator<AntropometriBloc>(),
       ),
+      BlocProvider(
+        create: (_) => serviceLocator<PeriksaGulaDarahBloc>(),
+      )
     ],
     child: const MainApp(),
     // Menjalankan widget utama aplikasi
@@ -105,6 +110,7 @@ class _MainAppState extends State<MainApp> {
           '/login': (context) => const LoginPage(),
           '/blog': (context) => const BlogPage(),
           '/antropometri': (context) => const AntropometriPage(),
+          '/periksa_guladarah': (context) => const PeriksaGulaDarahPage(),
         },
       ),
     );

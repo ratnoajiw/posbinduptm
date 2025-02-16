@@ -20,20 +20,6 @@ final class AntropometriUpload extends AntropometriEvent {
   });
 }
 
-class AntropometriGetAllAntropometris extends AntropometriEvent {
-  final String posterId;
-
-  AntropometriGetAllAntropometris({required this.posterId});
-}
-
-class AntropometriDelete extends AntropometriEvent {
-  final String antropometriId;
-
-  AntropometriDelete({
-    required this.antropometriId,
-  });
-}
-
 class AntropometriUpdate extends AntropometriEvent {
   final String id;
   final double beratBadan;
@@ -47,6 +33,20 @@ class AntropometriUpdate extends AntropometriEvent {
     required this.tinggiBadan,
     required this.lingkarPerut,
     required this.pemeriksaanAt,
+  });
+}
+
+class AntropometriGetAllAntropometriList extends AntropometriEvent {
+  final String posterId;
+
+  AntropometriGetAllAntropometriList({required this.posterId});
+}
+
+class AntropometriDelete extends AntropometriEvent {
+  final String antropometriId;
+
+  AntropometriDelete({
+    required this.antropometriId,
   });
 }
 
