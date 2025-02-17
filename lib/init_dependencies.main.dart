@@ -7,6 +7,7 @@ Future<void> initDependencies() async {
   _initBlog();
   _initAntropometri();
   _initGulaDarah();
+  _initTekananDarah();
 
   final supabase = await Supabase.initialize(
     url: AppSecrets.supabaseUrl,
@@ -223,6 +224,54 @@ void _initGulaDarah() {
         getAllGulaDarah: serviceLocator(),
         updateGulaDarah: serviceLocator(),
         deleteGulaDarah: serviceLocator(),
+      ),
+    );
+}
+
+void _initTekananDarah() {
+  serviceLocator
+    ..registerFactory<TekananDarahRemoteDataSource>(
+      () => TekananDarahRemoteDataSourceImpl(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory<TekananDarahRepository>(
+      () => TekananDarahRepositoryImpl(
+        serviceLocator(),
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory(
+      () => UploadTekananDarah(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory(
+      () => UpdateTekananDarah(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory(
+      () => GetAllTekananDarah(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory(
+      () => DeleteTekananDarah(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory(
+      () => GetLatestTekananDarah(
+        serviceLocator(),
+      ),
+    )
+    ..registerLazySingleton(
+      () => TekananDarahBloc(
+        uploadTekananDarah: serviceLocator(),
+        getAllTekananDarah: serviceLocator(),
+        updateTekananDarah: serviceLocator(),
+        deleteTekananDarah: serviceLocator(),
       ),
     );
 }

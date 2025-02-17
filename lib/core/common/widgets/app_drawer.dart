@@ -67,7 +67,16 @@ class AppDrawer extends StatelessWidget {
                   const Icon(Icons.bloodtype_outlined, color: Colors.black54),
               title: const Text('Gula Darah'),
               onTap: () {
-                Navigator.pushReplacementNamed(context, '/periksa_guladarah');
+                Navigator.pushReplacementNamed(context, '/periksa_gula_darah');
+              },
+            ),
+            ListTile(
+              leading:
+                  const Icon(Icons.bloodtype_rounded, color: Colors.black54),
+              title: const Text('Tekanan Darah'),
+              onTap: () {
+                Navigator.pushReplacementNamed(
+                    context, '/periksa_tekanan_darah');
               },
             ),
             const Divider(),

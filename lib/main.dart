@@ -10,6 +10,8 @@ import 'package:posbinduptm/features/blog/presentation/bloc/blog_bloc.dart';
 import 'package:posbinduptm/features/blog/presentation/pages/blog_page.dart';
 import 'package:posbinduptm/features/periksa_gula_darah/presentation/bloc/gula_darah_bloc.dart';
 import 'package:posbinduptm/features/periksa_gula_darah/presentation/pages/gula_darah_page.dart';
+import 'package:posbinduptm/features/periksa_tekanan_darah/presentation/bloc/tekanan_darah_bloc.dart';
+import 'package:posbinduptm/features/periksa_tekanan_darah/presentation/pages/tekanan_darah_page.dart';
 import 'package:posbinduptm/init_dependencies.dart';
 
 /// Fungsi utama aplikasi
@@ -26,24 +28,18 @@ void main() async {
   // untuk mengelola state management menggunakan Bloc
   runApp(MultiBlocProvider(
     providers: [
-      BlocProvider(
-        create: (_) => serviceLocator<AppUserCubit>(),
-        // Mengelola data user yang login
-      ),
-      BlocProvider(
-        create: (_) => serviceLocator<AuthBloc>(),
-        // Mengelola proses autentikasi
-      ),
-      BlocProvider(
-        create: (_) => serviceLocator<BlogBloc>(),
-        // Mengelola data blog
-      ),
-      BlocProvider(
-        create: (_) => serviceLocator<AntropometriBloc>(),
-      ),
-      BlocProvider(
-        create: (_) => serviceLocator<GulaDarahBloc>(),
-      )
+      // Mengelola data user yang login
+      BlocProvider(create: (_) => serviceLocator<AppUserCubit>()),
+      // Mengelola proses autentikasi
+      BlocProvider(create: (_) => serviceLocator<AuthBloc>()),
+      // Mengelola data blog
+      BlocProvider(create: (_) => serviceLocator<BlogBloc>()),
+      //mengelola data antropometri
+      BlocProvider(create: (_) => serviceLocator<AntropometriBloc>()),
+      //mengelola data gula darah
+      BlocProvider(create: (_) => serviceLocator<GulaDarahBloc>()),
+      //mengelola data tekanan darah
+      BlocProvider(create: (_) => serviceLocator<TekananDarahBloc>()),
     ],
     child: const MainApp(),
     // Menjalankan widget utama aplikasi
@@ -110,7 +106,8 @@ class _MainAppState extends State<MainApp> {
           '/login': (context) => const LoginPage(),
           '/blog': (context) => const BlogPage(),
           '/antropometri': (context) => const AntropometriPage(),
-          '/periksa_guladarah': (context) => const GulaDarahPage(),
+          '/periksa_gula_darah': (context) => const GulaDarahPage(),
+          '/periksa_tekanan_darah': (context) => const TekananDarahPage(),
         },
       ),
     );

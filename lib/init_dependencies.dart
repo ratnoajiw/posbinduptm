@@ -38,6 +38,15 @@ import 'package:posbinduptm/features/periksa_gula_darah/domain/usecases/get_all_
 import 'package:posbinduptm/features/periksa_gula_darah/domain/usecases/update_gula_darah.dart';
 import 'package:posbinduptm/features/periksa_gula_darah/domain/usecases/upload_gula_darah.dart';
 import 'package:posbinduptm/features/periksa_gula_darah/presentation/bloc/gula_darah_bloc.dart';
+import 'package:posbinduptm/features/periksa_tekanan_darah/data/datasources/tekanan_darah_remote_data_source.dart';
+import 'package:posbinduptm/features/periksa_tekanan_darah/data/repositories/tekanan_darah_repository_impl.dart';
+import 'package:posbinduptm/features/periksa_tekanan_darah/domain/repositories/tekanan_darah_repository.dart';
+import 'package:posbinduptm/features/periksa_tekanan_darah/domain/usecases/delete_tekanan_darah.dart';
+import 'package:posbinduptm/features/periksa_tekanan_darah/domain/usecases/get_all_tekanan_darah.dart';
+import 'package:posbinduptm/features/periksa_tekanan_darah/domain/usecases/get_latest_tekanan_darah.dart';
+import 'package:posbinduptm/features/periksa_tekanan_darah/domain/usecases/update_tekanan_darah.dart';
+import 'package:posbinduptm/features/periksa_tekanan_darah/domain/usecases/upload_tekanan_darah.dart';
+import 'package:posbinduptm/features/periksa_tekanan_darah/presentation/bloc/tekanan_darah_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 part 'init_dependencies.main.dart';
