@@ -42,7 +42,7 @@ void main() async {
         create: (_) => serviceLocator<AntropometriBloc>(),
       ),
       BlocProvider(
-        create: (_) => serviceLocator<PeriksaGulaDarahBloc>(),
+        create: (_) => serviceLocator<GulaDarahBloc>(),
       )
     ],
     child: const MainApp(),
@@ -110,7 +110,7 @@ class _MainAppState extends State<MainApp> {
           '/login': (context) => const LoginPage(),
           '/blog': (context) => const BlogPage(),
           '/antropometri': (context) => const AntropometriPage(),
-          '/periksa_guladarah': (context) => const PeriksaGulaDarahPage(),
+          '/periksa_guladarah': (context) => const GulaDarahPage(),
         },
       ),
     );

@@ -3,20 +3,19 @@ import 'package:posbinduptm/core/error/failure.dart';
 import 'package:posbinduptm/core/usecase/usecase.dart';
 import 'package:posbinduptm/features/periksa_gula_darah/domain/repository/gula_darah_repository.dart';
 
-class DeletePeriksaGulaDarah
-    implements UseCase<void, DeletePeriksaGulaDarahParams> {
-  final PeriksaGulaDarahRepository repository;
+class DeleteGulaDarah implements UseCase<void, DeleteGulaDarahParams> {
+  final GulaDarahRepository repository;
 
-  DeletePeriksaGulaDarah(this.repository);
+  DeleteGulaDarah(this.repository);
 
   @override
-  Future<Either<Failure, void>> call(DeletePeriksaGulaDarahParams params) {
-    return repository.deletePeriksaGulaDarah(params.id);
+  Future<Either<Failure, void>> call(DeleteGulaDarahParams params) {
+    return repository.deleteGulaDarah(params.id);
   }
 }
 
-class DeletePeriksaGulaDarahParams {
+class DeleteGulaDarahParams {
   final String id;
 
-  DeletePeriksaGulaDarahParams({required this.id});
+  DeleteGulaDarahParams({required this.id});
 }

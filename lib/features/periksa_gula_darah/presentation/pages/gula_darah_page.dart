@@ -12,27 +12,25 @@ import 'package:posbinduptm/features/periksa_gula_darah/presentation/pages/add_g
 import 'package:posbinduptm/features/periksa_gula_darah/presentation/pages/detail_gula_darah.dart';
 import 'package:posbinduptm/features/periksa_gula_darah/presentation/widgets/gula_darah_card.dart';
 
-class PeriksaGulaDarahPage extends StatefulWidget {
+class GulaDarahPage extends StatefulWidget {
   static route() => MaterialPageRoute(
-        builder: (context) => const PeriksaGulaDarahPage(),
+        builder: (context) => const GulaDarahPage(),
       );
 
-  const PeriksaGulaDarahPage({super.key});
+  const GulaDarahPage({super.key});
 
   @override
-  State<PeriksaGulaDarahPage> createState() => _PeriksaGulaDarahPageState();
+  State<GulaDarahPage> createState() => _GulaDarahPageState();
 }
 
-class _PeriksaGulaDarahPageState extends State<PeriksaGulaDarahPage> {
+class _GulaDarahPageState extends State<GulaDarahPage> {
   @override
   void initState() {
     super.initState();
     final state = context.read<AppUserCubit>().state;
     if (state is AppUserLoggedIn) {
       final profileId = state.user.id;
-      context
-          .read<PeriksaGulaDarahBloc>()
-          .add(PeriksaGulaDarahList(profileId: profileId));
+      context.read<GulaDarahBloc>().add(GulaDarahList(profileId: profileId));
     }
   }
 
@@ -44,8 +42,8 @@ class _PeriksaGulaDarahPageState extends State<PeriksaGulaDarahPage> {
         content: "Apakah Anda yakin ingin menghapus data ini?",
         onConfirm: () {
           context
-              .read<PeriksaGulaDarahBloc>()
-              .add(PeriksaGulaDarahDelete(gulaDarahSewaktuId: periksaId));
+              .read<GulaDarahBloc>()
+              .add(GulaDarahDelete(gulaDarahSewaktuId: periksaId));
         },
       ),
     );
@@ -53,32 +51,32 @@ class _PeriksaGulaDarahPageState extends State<PeriksaGulaDarahPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<PeriksaGulaDarahBloc, PeriksaGulaDarahState>(
+    return BlocListener<GulaDarahBloc, GulaDarahState>(
       listener: (context, state) {
-        if (state is PeriksaGulaDarahFailure) {
+        if (state is GulaDarahFailure) {
           showSnackBar(context, state.error);
-        } else if (state is PeriksaGulaDarahDeleteSuccess) {
+        } else if (state is GulaDarahDeleteSuccess) {
           showSnackBar(context, "Data berhasil dihapus");
           final userState = context.read<AppUserCubit>().state;
           if (userState is AppUserLoggedIn) {
-            context.read<PeriksaGulaDarahBloc>().add(
-                  PeriksaGulaDarahList(profileId: userState.user.id),
+            context.read<GulaDarahBloc>().add(
+                  GulaDarahList(profileId: userState.user.id),
                 );
           }
-        } else if (state is PeriksaGulaDarahUpdateSuccess) {
+        } else if (state is GulaDarahUpdateSuccess) {
           showSnackBar(context, "Data berhasil diupdate");
           final userState = context.read<AppUserCubit>().state;
           if (userState is AppUserLoggedIn) {
-            context.read<PeriksaGulaDarahBloc>().add(
-                  PeriksaGulaDarahList(profileId: userState.user.id),
+            context.read<GulaDarahBloc>().add(
+                  GulaDarahList(profileId: userState.user.id),
                 );
           }
-        } else if (state is PeriksaGulaDarahUploadSuccess) {
+        } else if (state is GulaDarahUploadSuccess) {
           showSnackBar(context, "Data berhasil diupload");
           final userState = context.read<AppUserCubit>().state;
           if (userState is AppUserLoggedIn) {
-            context.read<PeriksaGulaDarahBloc>().add(
-                  PeriksaGulaDarahList(profileId: userState.user.id),
+            context.read<GulaDarahBloc>().add(
+                  GulaDarahList(profileId: userState.user.id),
                 );
           }
         }
@@ -98,13 +96,12 @@ class _PeriksaGulaDarahPageState extends State<PeriksaGulaDarahPage> {
           ],
         ),
         drawer: const AppDrawer(),
-        body: BlocBuilder<PeriksaGulaDarahBloc, PeriksaGulaDarahState>(
+        body: BlocBuilder<GulaDarahBloc, GulaDarahState>(
           builder: (context, state) {
-            if (state is PeriksaGulaDarahLoading) {
+            if (state is GulaDarahLoading) {
               return const Loader();
-            } else if (state is PeriksaGulaDarahDisplaySuccess) {
-              final List<PeriksaGulaDarahEntity> gulaDarahList =
-                  state.periksaGulaDarahList;
+            } else if (state is GulaDarahDisplaySuccess) {
+              final List<GulaDarahEntity> gulaDarahList = state.gulaDarahList;
 
               if (gulaDarahList.isEmpty) {
                 return const Center(
@@ -134,7 +131,7 @@ class _PeriksaGulaDarahPageState extends State<PeriksaGulaDarahPage> {
                         GulaDarahCard(
                           gulaDarah: gulaDarah,
                           onDelete: () =>
-                              _showDeleteDialog(context, gulaDarah.id),
+                              _showDeleteDialog(context, gulaDarah.gulaDarahId),
                           color: index % 3 == 0
                               ? AppPallete.gradientGreen1
                               : AppPallete.gradientGreen2,
@@ -144,7 +141,7 @@ class _PeriksaGulaDarahPageState extends State<PeriksaGulaDarahPage> {
                   );
                 },
               );
-            } else if (state is PeriksaGulaDarahFailure) {
+            } else if (state is GulaDarahFailure) {
               return Center(child: Text("Terjadi kesalahan: ${state.error}"));
             }
             return const Loader();

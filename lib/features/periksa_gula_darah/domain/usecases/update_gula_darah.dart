@@ -4,30 +4,30 @@ import 'package:posbinduptm/core/usecase/usecase.dart';
 import 'package:posbinduptm/features/periksa_gula_darah/domain/entities/gula_darah_entity.dart';
 import 'package:posbinduptm/features/periksa_gula_darah/domain/repository/gula_darah_repository.dart';
 
-class UpdatePeriksaGulaDarah
-    implements UseCase<PeriksaGulaDarahEntity, UpdatePeriksaGulaDarahParams> {
-  final PeriksaGulaDarahRepository repository;
+class UpdateGulaDarah
+    implements UseCase<GulaDarahEntity, UpdateGulaDarahParams> {
+  final GulaDarahRepository repository;
 
-  UpdatePeriksaGulaDarah(this.repository);
+  UpdateGulaDarah(this.repository);
 
   @override
-  Future<Either<Failure, PeriksaGulaDarahEntity>> call(
-      UpdatePeriksaGulaDarahParams params) async {
-    return await repository.updatePeriksaGulaDarah(
-      id: params.id,
+  Future<Either<Failure, GulaDarahEntity>> call(
+      UpdateGulaDarahParams params) async {
+    return await repository.updateGulaDarah(
+      gulaDarahId: params.gulaDarahId,
       gulaDarahSewaktu: params.gulaDarahSewaktu,
       pemeriksaanAt: params.pemeriksaanAt,
     );
   }
 }
 
-class UpdatePeriksaGulaDarahParams {
-  final String id;
+class UpdateGulaDarahParams {
+  final String gulaDarahId;
   final double gulaDarahSewaktu;
   final DateTime pemeriksaanAt;
 
-  UpdatePeriksaGulaDarahParams({
-    required this.id,
+  UpdateGulaDarahParams({
+    required this.gulaDarahId,
     required this.gulaDarahSewaktu,
     required this.pemeriksaanAt,
   });

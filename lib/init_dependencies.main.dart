@@ -6,7 +6,7 @@ Future<void> initDependencies() async {
   _initAuth();
   _initBlog();
   _initAntropometri();
-  _initPeriksaGulaDarah();
+  _initGulaDarah();
 
   final supabase = await Supabase.initialize(
     url: AppSecrets.supabaseUrl,
@@ -184,45 +184,45 @@ void _initAntropometri() {
     );
 }
 
-void _initPeriksaGulaDarah() {
+void _initGulaDarah() {
   serviceLocator
-    ..registerFactory<PeriksaGulaDarahRemoteDataSource>(
-      () => PeriksaGulaDarahRemoteDataSourceImpl(
+    ..registerFactory<GulaDarahRemoteDataSource>(
+      () => GulaDarahRemoteDataSourceImpl(
         serviceLocator(),
       ),
     )
-    ..registerFactory<PeriksaGulaDarahRepository>(
-      () => PeriksaGulaDarahRepositoryImpl(
+    ..registerFactory<GulaDarahRepository>(
+      () => GulaDarahRepositoryImpl(
         serviceLocator(),
-        serviceLocator(),
-      ),
-    )
-    ..registerFactory(
-      () => UploadPeriksaGulaDarah(
         serviceLocator(),
       ),
     )
     ..registerFactory(
-      () => UpdatePeriksaGulaDarah(
+      () => UploadGulaDarah(
         serviceLocator(),
       ),
     )
     ..registerFactory(
-      () => GetAllPeriksaGulaDarah(
+      () => UpdateGulaDarah(
         serviceLocator(),
       ),
     )
     ..registerFactory(
-      () => DeletePeriksaGulaDarah(
+      () => GetAllGulaDarah(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory(
+      () => DeleteGulaDarah(
         serviceLocator(),
       ),
     )
     ..registerLazySingleton(
-      () => PeriksaGulaDarahBloc(
-        uploadPeriksaGulaDarah: serviceLocator(),
-        getAllPeriksaGulaDarah: serviceLocator(),
-        updatePeriksaGulaDarah: serviceLocator(),
-        deletePeriksaGulaDarah: serviceLocator(),
+      () => GulaDarahBloc(
+        uploadGulaDarah: serviceLocator(),
+        getAllGulaDarah: serviceLocator(),
+        updateGulaDarah: serviceLocator(),
+        deleteGulaDarah: serviceLocator(),
       ),
     );
 }

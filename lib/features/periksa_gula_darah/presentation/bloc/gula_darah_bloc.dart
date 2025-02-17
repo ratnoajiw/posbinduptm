@@ -10,97 +10,95 @@ import 'package:posbinduptm/features/periksa_gula_darah/domain/usecases/upload_g
 part 'gula_darah_event.dart';
 part 'gula_darah_state.dart';
 
-class PeriksaGulaDarahBloc
-    extends Bloc<PeriksaGulaDarahEvent, PeriksaGulaDarahState> {
-  final UploadPeriksaGulaDarah _uploadPeriksaGulaDarah;
-  final GetAllPeriksaGulaDarah _getAllPeriksaGulaDarah;
-  final DeletePeriksaGulaDarah _deletePeriksaGulaDarah;
-  final UpdatePeriksaGulaDarah _updatePeriksaGulaDarah;
+class GulaDarahBloc extends Bloc<GulaDarahEvent, GulaDarahState> {
+  final UploadGulaDarah _uploadGulaDarah;
+  final GetAllGulaDarah _getAllGulaDarah;
+  final DeleteGulaDarah _deleteGulaDarah;
+  final UpdateGulaDarah _updateGulaDarah;
 
-  PeriksaGulaDarahBloc({
-    required UploadPeriksaGulaDarah uploadPeriksaGulaDarah,
-    required GetAllPeriksaGulaDarah getAllPeriksaGulaDarah,
-    required DeletePeriksaGulaDarah deletePeriksaGulaDarah,
-    required UpdatePeriksaGulaDarah updatePeriksaGulaDarah,
-  })  : _uploadPeriksaGulaDarah = uploadPeriksaGulaDarah,
-        _getAllPeriksaGulaDarah = getAllPeriksaGulaDarah,
-        _deletePeriksaGulaDarah = deletePeriksaGulaDarah,
-        _updatePeriksaGulaDarah = updatePeriksaGulaDarah,
-        super(PeriksaGulaDarahInitial()) {
-    on<PeriksaGulaDarahUpload>(_onUploadPeriksaGulaDarah);
-    on<PeriksaGulaDarahUpdate>(_onUpdatePeriksaGulaDarah);
-    on<PeriksaGulaDarahList>(_onGetAllPeriksaGulaDarah);
-    on<PeriksaGulaDarahDelete>(_onDeletePeriksaGulaDarah);
-    on<PeriksaGulaDarahGet>(_onGetPeriksaGulaDarah);
+  GulaDarahBloc({
+    required UploadGulaDarah uploadGulaDarah,
+    required GetAllGulaDarah getAllGulaDarah,
+    required DeleteGulaDarah deleteGulaDarah,
+    required UpdateGulaDarah updateGulaDarah,
+  })  : _uploadGulaDarah = uploadGulaDarah,
+        _getAllGulaDarah = getAllGulaDarah,
+        _deleteGulaDarah = deleteGulaDarah,
+        _updateGulaDarah = updateGulaDarah,
+        super(GulaDarahInitial()) {
+    on<GulaDarahUpload>(_onUploadGulaDarah);
+    on<GulaDarahUpdate>(_onUpdateGulaDarah);
+    on<GulaDarahList>(_onGetAllGulaDarah);
+    on<GulaDarahDelete>(_onDeleteGulaDarah);
+    on<GulaDarahGet>(_onGetGulaDarah);
   }
 
   // Ambil semua data pemeriksaan gula darah berdasarkan profileId
-  void _onGetAllPeriksaGulaDarah(
-      PeriksaGulaDarahList event, Emitter<PeriksaGulaDarahState> emit) async {
-    emit(PeriksaGulaDarahLoading());
-    final res = await _getAllPeriksaGulaDarah(
-        GetAllPeriksaGulaDarahParams(profileId: event.profileId));
+  void _onGetAllGulaDarah(
+      GulaDarahList event, Emitter<GulaDarahState> emit) async {
+    emit(GulaDarahLoading());
+    final res = await _getAllGulaDarah(
+        GetAllGulaDarahParams(profileId: event.profileId));
     res.fold(
-      (failure) => emit(PeriksaGulaDarahFailure(failure.message)),
-      (data) => emit(PeriksaGulaDarahDisplaySuccess(data)),
+      (failure) => emit(GulaDarahFailure(failure.message)),
+      (data) => emit(GulaDarahDisplaySuccess(data)),
     );
   }
 
   // Upload data pemeriksaan gula darah baru
-  void _onUploadPeriksaGulaDarah(
-      PeriksaGulaDarahUpload event, Emitter<PeriksaGulaDarahState> emit) async {
-    emit(PeriksaGulaDarahLoading());
-    final res = await _uploadPeriksaGulaDarah(UploadPeriksaGulaDarahParams(
+  void _onUploadGulaDarah(
+      GulaDarahUpload event, Emitter<GulaDarahState> emit) async {
+    emit(GulaDarahLoading());
+    final res = await _uploadGulaDarah(UploadGulaDarahParams(
       profileId: event.profileId,
       gulaDarahSewaktu: event.gulaDarahSewaktu,
       pemeriksaanAt: event.pemeriksaanAt,
     ));
     res.fold(
-      (failure) => emit(PeriksaGulaDarahFailure(failure.message)),
-      (_) => emit(PeriksaGulaDarahUploadSuccess()),
+      (failure) => emit(GulaDarahFailure(failure.message)),
+      (_) => emit(GulaDarahUploadSuccess()),
     );
   }
 
   // Update data pemeriksaan gula darah
-  void _onUpdatePeriksaGulaDarah(
-      PeriksaGulaDarahUpdate event, Emitter<PeriksaGulaDarahState> emit) async {
-    emit(PeriksaGulaDarahLoading());
-    final res = await _updatePeriksaGulaDarah(UpdatePeriksaGulaDarahParams(
-      id: event.id,
+  void _onUpdateGulaDarah(
+      GulaDarahUpdate event, Emitter<GulaDarahState> emit) async {
+    emit(GulaDarahLoading());
+    final res = await _updateGulaDarah(UpdateGulaDarahParams(
+      gulaDarahId: event.gulaDarahId,
       gulaDarahSewaktu: event.gulaDarahSewaktu,
       pemeriksaanAt: event.pemeriksaanAt,
     ));
     res.fold(
-      (failure) => emit(PeriksaGulaDarahFailure(failure.message)),
-      (data) => emit(PeriksaGulaDarahUpdateSuccess()),
+      (failure) => emit(GulaDarahFailure(failure.message)),
+      (data) => emit(GulaDarahUpdateSuccess()),
     );
   }
 
   // Hapus data pemeriksaan gula darah berdasarkan ID
-  void _onDeletePeriksaGulaDarah(
-      PeriksaGulaDarahDelete event, Emitter<PeriksaGulaDarahState> emit) async {
-    emit(PeriksaGulaDarahLoading());
-    final res = await _deletePeriksaGulaDarah(
-        DeletePeriksaGulaDarahParams(id: event.gulaDarahSewaktuId));
+  void _onDeleteGulaDarah(
+      GulaDarahDelete event, Emitter<GulaDarahState> emit) async {
+    emit(GulaDarahLoading());
+    final res = await _deleteGulaDarah(
+        DeleteGulaDarahParams(id: event.gulaDarahSewaktuId));
     res.fold(
-      (failure) => emit(PeriksaGulaDarahFailure(failure.message)),
-      (_) => emit(PeriksaGulaDarahDeleteSuccess()),
+      (failure) => emit(GulaDarahFailure(failure.message)),
+      (_) => emit(GulaDarahDeleteSuccess()),
     );
   }
 
   // Ambil satu data pemeriksaan gula darah berdasarkan ID
-  void _onGetPeriksaGulaDarah(
-      PeriksaGulaDarahGet event, Emitter<PeriksaGulaDarahState> emit) async {
-    emit(PeriksaGulaDarahLoading());
-    final res = await _getAllPeriksaGulaDarah(
-        GetAllPeriksaGulaDarahParams(profileId: event.gulaDarahSewaktuId));
+  void _onGetGulaDarah(GulaDarahGet event, Emitter<GulaDarahState> emit) async {
+    emit(GulaDarahLoading());
+    final res = await _getAllGulaDarah(
+        GetAllGulaDarahParams(profileId: event.gulaDarahSewaktuId));
     res.fold(
-      (failure) => emit(PeriksaGulaDarahFailure(failure.message)),
+      (failure) => emit(GulaDarahFailure(failure.message)),
       (data) {
         if (data.isNotEmpty) {
-          emit(PeriksaGulaDarahDisplaySuccess([data.first]));
+          emit(GulaDarahDisplaySuccess([data.first]));
         } else {
-          emit(const PeriksaGulaDarahFailure("Data tidak ditemukan"));
+          emit(const GulaDarahFailure("Data tidak ditemukan"));
         }
       },
     );

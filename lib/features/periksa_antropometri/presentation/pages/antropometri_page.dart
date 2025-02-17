@@ -97,12 +97,10 @@ class _AntropometriPageState extends State<AntropometriPage> {
               return const Loader();
             } else if (state is AntropometrisDisplaySuccess ||
                 state is AntropometriUpdateSuccess) {
-              // 🔥 Tambahkan kondisi ini
               final List<AntropometriEntity> antropometriList =
                   state is AntropometrisDisplaySuccess
                       ? state.antropometriList
-                      : []; // Gunakan list kosong jika state belum diperbarui
-
+                      : [];
               if (antropometriList.isEmpty) {
                 return const Center(
                   child: Text(

@@ -60,8 +60,8 @@ class _AddGulaDarahPageState extends State<AddGulaDarahPage> {
         final DateTime pemeriksaanAt = DateFormat("dd/MM/yyyy HH:mm")
             .parse("${tanggalController.text} ${waktuController.text}");
 
-        context.read<PeriksaGulaDarahBloc>().add(
-              PeriksaGulaDarahUpload(
+        context.read<GulaDarahBloc>().add(
+              GulaDarahUpload(
                 profileId: profileId,
                 updateAt: DateTime.now().toIso8601String(),
                 gulaDarahSewaktu: double.parse(gulaDarahController.text.trim()),
@@ -96,20 +96,20 @@ class _AddGulaDarahPageState extends State<AddGulaDarahPage> {
           ),
         ],
       ),
-      body: BlocConsumer<PeriksaGulaDarahBloc, PeriksaGulaDarahState>(
+      body: BlocConsumer<GulaDarahBloc, GulaDarahState>(
         listener: (context, state) {
-          if (state is PeriksaGulaDarahFailure) {
+          if (state is GulaDarahFailure) {
             showSnackBar(context, state.error);
-          } else if (state is PeriksaGulaDarahUploadSuccess) {
+          } else if (state is GulaDarahUploadSuccess) {
             Navigator.pushAndRemoveUntil(
               context,
-              PeriksaGulaDarahPage.route(),
+              GulaDarahPage.route(),
               (route) => false,
             );
           }
         },
         builder: (context, state) {
-          if (state is PeriksaGulaDarahLoading) {
+          if (state is GulaDarahLoading) {
             return const Loader();
           }
           return SingleChildScrollView(

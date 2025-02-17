@@ -7,13 +7,13 @@ import 'package:posbinduptm/features/periksa_gula_darah/presentation/bloc/gula_d
 import 'package:posbinduptm/features/periksa_gula_darah/presentation/widgets/gula_darah_field.dart';
 
 class UpdateGulaDarahPage extends StatefulWidget {
-  final String id;
+  final String gulaDarahId;
   final double gulaDarahSewaktuId;
   final DateTime pemeriksaanAt;
 
   const UpdateGulaDarahPage({
     super.key,
-    required this.id,
+    required this.gulaDarahId,
     required this.gulaDarahSewaktuId,
     required this.pemeriksaanAt,
   });
@@ -69,8 +69,8 @@ class _UpdateGulaDarahPageState extends State<UpdateGulaDarahPage> {
       DateTime pemeriksaanAt = DateFormat('dd/MM/yyyy HH:mm')
           .parse('${tanggalController.text} ${waktuController.text}');
 
-      context.read<PeriksaGulaDarahBloc>().add(PeriksaGulaDarahUpdate(
-            id: widget.id,
+      context.read<GulaDarahBloc>().add(GulaDarahUpdate(
+            gulaDarahId: widget.gulaDarahId,
             gulaDarahSewaktu: double.parse(gulaDarahController.text),
             pemeriksaanAt: pemeriksaanAt,
           ));
@@ -79,11 +79,11 @@ class _UpdateGulaDarahPageState extends State<UpdateGulaDarahPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<PeriksaGulaDarahBloc, PeriksaGulaDarahState>(
+    return BlocListener<GulaDarahBloc, GulaDarahState>(
       listener: (context, state) {
-        if (state is PeriksaGulaDarahUpdateSuccess) {
+        if (state is GulaDarahUpdateSuccess) {
           Navigator.pop(context); // <-- Navigasi kembali
-        } else if (state is PeriksaGulaDarahFailure) {
+        } else if (state is GulaDarahFailure) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(state.error)),
           );

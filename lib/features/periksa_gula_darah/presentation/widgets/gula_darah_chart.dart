@@ -5,7 +5,7 @@ import 'package:posbinduptm/core/theme/app_pallete.dart';
 import 'package:posbinduptm/features/periksa_gula_darah/domain/entities/gula_darah_entity.dart';
 
 class GulaDarahChart extends StatelessWidget {
-  final List<PeriksaGulaDarahEntity> data;
+  final List<GulaDarahEntity> data;
 
   const GulaDarahChart({super.key, required this.data});
 

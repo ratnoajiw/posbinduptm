@@ -4,22 +4,21 @@ import 'package:posbinduptm/core/usecase/usecase.dart';
 import 'package:posbinduptm/features/periksa_gula_darah/domain/entities/gula_darah_entity.dart';
 import 'package:posbinduptm/features/periksa_gula_darah/domain/repository/gula_darah_repository.dart';
 
-class GetLatestPeriksaGulaDarah
-    implements
-        UseCase<PeriksaGulaDarahEntity?, GetLatestPeriksaGulaDarahParams> {
-  final PeriksaGulaDarahRepository repository;
+class GetLatestGulaDarah
+    implements UseCase<GulaDarahEntity?, GetLatestGulaDarahParams> {
+  final GulaDarahRepository repository;
 
-  GetLatestPeriksaGulaDarah(this.repository);
+  GetLatestGulaDarah(this.repository);
 
   @override
-  Future<Either<Failure, PeriksaGulaDarahEntity?>> call(
-      GetLatestPeriksaGulaDarahParams params) {
-    return repository.getLatestPeriksaGulaDarah(profileId: params.profileId);
+  Future<Either<Failure, GulaDarahEntity?>> call(
+      GetLatestGulaDarahParams params) {
+    return repository.getLatestGulaDarah(profileId: params.profileId);
   }
 }
 
-class GetLatestPeriksaGulaDarahParams {
+class GetLatestGulaDarahParams {
   final String profileId;
 
-  GetLatestPeriksaGulaDarahParams({required this.profileId});
+  GetLatestGulaDarahParams({required this.profileId});
 }

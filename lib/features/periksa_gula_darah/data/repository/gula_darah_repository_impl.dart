@@ -9,27 +9,27 @@ import 'package:posbinduptm/features/periksa_gula_darah/domain/entities/gula_dar
 import 'package:posbinduptm/features/periksa_gula_darah/domain/repository/gula_darah_repository.dart';
 import 'package:uuid/uuid.dart';
 
-class PeriksaGulaDarahRepositoryImpl implements PeriksaGulaDarahRepository {
-  final PeriksaGulaDarahRemoteDataSource remoteDataSource;
+class GulaDarahRepositoryImpl implements GulaDarahRepository {
+  final GulaDarahRemoteDataSource remoteDataSource;
   final ConnectionChecker connectionChecker;
 
-  PeriksaGulaDarahRepositoryImpl(
+  GulaDarahRepositoryImpl(
     this.remoteDataSource,
     this.connectionChecker,
   );
 
   // Ambil semua data pemeriksaan gula darah berdasarkan profileId
   @override
-  Future<Either<Failure, List<PeriksaGulaDarahEntity>>> getAllPeriksaGulaDarah({
+  Future<Either<Failure, List<GulaDarahEntity>>> getAllGulaDarah({
     required String profileId,
   }) async {
     try {
       if (!await connectionChecker.isConnected) {
         return left(Failure(Constant.noConnectionErrorMessage));
       }
-      final periksaGulaDarahList =
-          await remoteDataSource.getAllPeriksaGulaDarah(profileId: profileId);
-      return right(periksaGulaDarahList);
+      final gulaDarahList =
+          await remoteDataSource.getAllGulaDarah(profileId: profileId);
+      return right(gulaDarahList);
     } on ServerException catch (e) {
       return left(Failure(e.message));
     }
@@ -37,15 +37,15 @@ class PeriksaGulaDarahRepositoryImpl implements PeriksaGulaDarahRepository {
 
   // Ambil data pemeriksaan gula darah terbaru
   @override
-  Future<Either<Failure, PeriksaGulaDarahEntity?>> getLatestPeriksaGulaDarah({
+  Future<Either<Failure, GulaDarahEntity?>> getLatestGulaDarah({
     required String profileId,
   }) async {
     try {
       if (!await connectionChecker.isConnected) {
         return left(Failure(Constant.noConnectionErrorMessage));
       }
-      final result = await remoteDataSource.getLatestPeriksaGulaDarah(
-          profileId: profileId);
+      final result =
+          await remoteDataSource.getLatestGulaDarah(profileId: profileId);
       return right(result);
     } on ServerException catch (e) {
       return left(Failure(e.message));
@@ -54,7 +54,7 @@ class PeriksaGulaDarahRepositoryImpl implements PeriksaGulaDarahRepository {
 
   // Upload data pemeriksaan gula darah
   @override
-  Future<Either<Failure, PeriksaGulaDarahEntity>> uploadPeriksaGulaDarah({
+  Future<Either<Failure, GulaDarahEntity>> uploadGulaDarah({
     required double gulaDarahSewaktu,
     required String profileId,
     required DateTime pemeriksaanAt,
@@ -63,16 +63,16 @@ class PeriksaGulaDarahRepositoryImpl implements PeriksaGulaDarahRepository {
       if (!await connectionChecker.isConnected) {
         return left(Failure(Constant.noConnectionErrorMessage));
       }
-      PeriksaGulaDarahModel periksaGulaDarahModel = PeriksaGulaDarahModel(
-        id: const Uuid().v1(),
+      GulaDarahModel gulaDarahModel = GulaDarahModel(
+        gulaDarahId: const Uuid().v1(),
         profileId: profileId,
         gulaDarahSewaktu: gulaDarahSewaktu,
         updatedAt: DateTime.now(),
         pemeriksaanAt: pemeriksaanAt,
       );
-      final uploadedPeriksaGulaDarah =
-          await remoteDataSource.uploadPeriksaGulaDarah(periksaGulaDarahModel);
-      return right(uploadedPeriksaGulaDarah);
+      final uploadedGulaDarah =
+          await remoteDataSource.uploadGulaDarah(gulaDarahModel);
+      return right(uploadedGulaDarah);
     } on ServerException catch (e) {
       return left(Failure(e.message));
     }
@@ -80,8 +80,8 @@ class PeriksaGulaDarahRepositoryImpl implements PeriksaGulaDarahRepository {
 
   // Update data pemeriksaan gula darah berdasarkan ID (mengembalikan entity terbaru)
   @override
-  Future<Either<Failure, PeriksaGulaDarahEntity>> updatePeriksaGulaDarah({
-    required String id,
+  Future<Either<Failure, GulaDarahEntity>> updateGulaDarah({
+    required String gulaDarahId,
     required double gulaDarahSewaktu,
     required DateTime pemeriksaanAt,
   }) async {
@@ -89,10 +89,10 @@ class PeriksaGulaDarahRepositoryImpl implements PeriksaGulaDarahRepository {
       if (!await connectionChecker.isConnected) {
         return left(Failure(Constant.noConnectionErrorMessage));
       }
-      final updatedData = await remoteDataSource.updatePeriksaGulaDarah(
-        gulaDarahId: id,
+      final updatedData = await remoteDataSource.updateGulaDarah(
+        gulaDarahId: gulaDarahId,
         gulaDarahSewaktu: gulaDarahSewaktu,
-        periksaAt: pemeriksaanAt,
+        pemeriksaanAt: pemeriksaanAt,
       );
       return right(updatedData);
     } on ServerException catch (e) {
@@ -102,12 +102,12 @@ class PeriksaGulaDarahRepositoryImpl implements PeriksaGulaDarahRepository {
 
   // Hapus data pemeriksaan gula darah berdasarkan ID
   @override
-  Future<Either<Failure, void>> deletePeriksaGulaDarah(String id) async {
+  Future<Either<Failure, void>> deleteGulaDarah(String gulaDarahId) async {
     try {
       if (!await connectionChecker.isConnected) {
         return left(Failure(Constant.noConnectionErrorMessage));
       }
-      await remoteDataSource.deletePeriksaGulaDarah(id);
+      await remoteDataSource.deleteGulaDarah(gulaDarahId);
       return right(null);
     } on ServerException catch (e) {
       return left(Failure(e.message));

@@ -105,7 +105,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       AuthField(
                         controller: nameController,
                         labelText: 'Nama',
-                        hintText: 'Nama',
+                        hintText: 'ketik nama Anda di sini',
                       ),
                       const SizedBox(
                         height: 15,
@@ -114,7 +114,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       AuthField(
                         controller: emailController,
                         labelText: 'Email',
-                        hintText: 'Email',
+                        hintText: 'ketik email Anda di sini',
                       ),
                       const SizedBox(
                         height: 15,
@@ -123,7 +123,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       AuthField(
                         controller: passwordController,
                         labelText: 'Password',
-                        hintText: 'Password',
+                        hintText: 'ketik password Anda di sini',
                         isObsecureText: true,
                       ),
                       const SizedBox(

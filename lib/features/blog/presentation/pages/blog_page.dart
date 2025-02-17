@@ -48,9 +48,9 @@ class _BlogPageState extends State<BlogPage> {
             onPressed: () async {
               await Navigator.push(context, AddNewBlogPage.route());
               if (!context.mounted) return;
-              refreshBlogs(); // 🔥 Ambil ulang data setelah menambahkan blog
+              refreshBlogs();
             },
-            icon: const Icon(Icons.add_circle),
+            icon: const Icon(Icons.add),
           ),
         ],
       ),
@@ -65,7 +65,6 @@ class _BlogPageState extends State<BlogPage> {
           if (state is BlogLoading) {
             return const Loader();
           }
-
           if (state is BlogsDisplaySuccess) {
             if (state.blogs.isEmpty) {
               return const Center(
@@ -78,7 +77,7 @@ class _BlogPageState extends State<BlogPage> {
 
             return RefreshIndicator(
               onRefresh: () async {
-                refreshBlogs(); // 🔥 Tarik ke bawah untuk refresh data
+                refreshBlogs();
               },
               child: ListView.builder(
                 itemCount: state.blogs.length,
@@ -94,8 +93,10 @@ class _BlogPageState extends State<BlogPage> {
                 },
               ),
             );
+          } else if (state is BlogFailure) {
+            return Center(child: Text("Terjadi kesalahan: ${state.error}"));
           }
-          return const SizedBox();
+          return const Loader();
         },
       ),
     );

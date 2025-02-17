@@ -5,7 +5,7 @@ import 'package:posbinduptm/features/periksa_gula_darah/domain/entities/gula_dar
 import 'package:posbinduptm/features/periksa_gula_darah/presentation/pages/update_gula_darah_page.dart';
 
 class GulaDarahCard extends StatelessWidget {
-  final PeriksaGulaDarahEntity gulaDarah;
+  final GulaDarahEntity gulaDarah;
   final VoidCallback onDelete;
   final Color color;
 
@@ -123,7 +123,7 @@ class GulaDarahCard extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                             builder: (context) => UpdateGulaDarahPage(
-                              id: gulaDarah.id,
+                              gulaDarahId: gulaDarah.gulaDarahId,
                               gulaDarahSewaktuId: gulaDarah.gulaDarahSewaktu,
                               pemeriksaanAt: gulaDarah.pemeriksaanAt,
                             ),

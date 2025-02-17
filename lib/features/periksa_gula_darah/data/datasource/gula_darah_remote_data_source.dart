@@ -3,35 +3,34 @@ import 'package:posbinduptm/features/periksa_gula_darah/data/models/gula_darah_m
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:uuid/uuid.dart';
 
-abstract interface class PeriksaGulaDarahRemoteDataSource {
-  Future<List<PeriksaGulaDarahModel>> getAllPeriksaGulaDarah({
+abstract interface class GulaDarahRemoteDataSource {
+  Future<List<GulaDarahModel>> getAllGulaDarah({
     required String profileId,
   });
 
-  Future<PeriksaGulaDarahModel?> getLatestPeriksaGulaDarah({
+  Future<GulaDarahModel?> getLatestGulaDarah({
     required String profileId,
   });
 
-  Future<PeriksaGulaDarahModel> uploadPeriksaGulaDarah(
-    PeriksaGulaDarahModel periksaGulaDarah,
+  Future<GulaDarahModel> uploadGulaDarah(
+    GulaDarahModel gulaDarahModel,
   );
 
-  Future<PeriksaGulaDarahModel> updatePeriksaGulaDarah({
+  Future<GulaDarahModel> updateGulaDarah({
     required String gulaDarahId,
     required double gulaDarahSewaktu,
-    required DateTime periksaAt,
+    required DateTime pemeriksaanAt,
   });
 
-  Future<void> deletePeriksaGulaDarah(String periksaGulaDarahId);
+  Future<void> deleteGulaDarah(String gulaDarahId);
 }
 
-class PeriksaGulaDarahRemoteDataSourceImpl
-    implements PeriksaGulaDarahRemoteDataSource {
+class GulaDarahRemoteDataSourceImpl implements GulaDarahRemoteDataSource {
   final SupabaseClient supabaseClient;
-  PeriksaGulaDarahRemoteDataSourceImpl(this.supabaseClient);
+  GulaDarahRemoteDataSourceImpl(this.supabaseClient);
 
   @override
-  Future<List<PeriksaGulaDarahModel>> getAllPeriksaGulaDarah({
+  Future<List<GulaDarahModel>> getAllGulaDarah({
     required String profileId,
   }) async {
     try {
@@ -41,9 +40,9 @@ class PeriksaGulaDarahRemoteDataSourceImpl
           .eq('profile_id', profileId)
           .order('pemeriksaan_at', ascending: false);
 
-      return results.map((periksa) {
-        return PeriksaGulaDarahModel.fromJson(periksa).copyWith(
-          profileName: periksa['profiles']?['name'],
+      return results.map((periksaGulaDarah) {
+        return GulaDarahModel.fromJson(periksaGulaDarah).copyWith(
+          profileName: periksaGulaDarah['profiles']?['name'],
         );
       }).toList();
     } on PostgrestException catch (e) {
@@ -52,7 +51,7 @@ class PeriksaGulaDarahRemoteDataSourceImpl
   }
 
   @override
-  Future<PeriksaGulaDarahModel?> getLatestPeriksaGulaDarah({
+  Future<GulaDarahModel?> getLatestGulaDarah({
     required String profileId,
   }) async {
     try {
@@ -64,22 +63,22 @@ class PeriksaGulaDarahRemoteDataSourceImpl
           .limit(1);
 
       if (results.isEmpty) return null;
-      return PeriksaGulaDarahModel.fromJson(results.first);
+      return GulaDarahModel.fromJson(results.first);
     } on PostgrestException catch (e) {
       throw ServerException(e.message);
     }
   }
 
   @override
-  Future<PeriksaGulaDarahModel> uploadPeriksaGulaDarah(
-      PeriksaGulaDarahModel periksaGulaDarah) async {
+  Future<GulaDarahModel> uploadGulaDarah(GulaDarahModel gulaDarahModel) async {
     try {
-      final periksaData = await supabaseClient
+      final uploadData = await supabaseClient
           .from('periksa_gula_darah')
-          .insert(periksaGulaDarah.copyWith(id: const Uuid().v4()).toJson())
+          .insert(
+              gulaDarahModel.copyWith(gulaDarahId: const Uuid().v4()).toJson())
           .select();
 
-      return PeriksaGulaDarahModel.fromJson(periksaData.first);
+      return GulaDarahModel.fromJson(uploadData.first);
     } on PostgrestException catch (e) {
       throw ServerException(e.message);
     } catch (e) {
@@ -88,14 +87,13 @@ class PeriksaGulaDarahRemoteDataSourceImpl
   }
 
   @override
-  Future<PeriksaGulaDarahModel> updatePeriksaGulaDarah({
-    required String gulaDarahId,
-    required double gulaDarahSewaktu,
-    required DateTime periksaAt,
-  }) async {
+  Future<GulaDarahModel> updateGulaDarah(
+      {required String gulaDarahId,
+      required double gulaDarahSewaktu,
+      required DateTime pemeriksaanAt}) async {
     try {
       final updateData = <String, dynamic>{
-        'pemeriksaan_at': periksaAt.toIso8601String(),
+        'pemeriksaan_at': pemeriksaanAt.toIso8601String(),
         'updated_at': DateTime.now().toIso8601String(),
         'gula_darah_sewaktu': gulaDarahSewaktu,
       };
@@ -111,19 +109,19 @@ class PeriksaGulaDarahRemoteDataSourceImpl
             "Data tidak ditemukan atau gagal diperbarui");
       }
 
-      return PeriksaGulaDarahModel.fromJson(updatedData.first);
+      return GulaDarahModel.fromJson(updatedData.first);
     } on PostgrestException catch (e) {
       throw ServerException(e.message);
     }
   }
 
   @override
-  Future<void> deletePeriksaGulaDarah(String periksaGulaDarahId) async {
+  Future<void> deleteGulaDarah(String gulaDarahId) async {
     try {
       await supabaseClient
           .from('periksa_gula_darah')
           .delete()
-          .match({'gula_darah_id': periksaGulaDarahId});
+          .match({'gula_darah_id': gulaDarahId});
     } on PostgrestException catch (e) {
       throw ServerException(e.message);
     }

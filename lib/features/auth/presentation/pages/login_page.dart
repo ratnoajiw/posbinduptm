@@ -108,7 +108,7 @@ class _LoginPageState extends State<LoginPage> {
                       AuthField(
                         controller: emailController,
                         labelText: 'Email',
-                        hintText: 'Email',
+                        hintText: 'ketik email Anda di sini',
                       ),
                       const SizedBox(height: 15),
 
@@ -116,7 +116,7 @@ class _LoginPageState extends State<LoginPage> {
                       AuthField(
                         controller: passwordController,
                         labelText: 'Password',
-                        hintText: 'Password',
+                        hintText: 'ketik password Anda di sini',
                         isObsecureText: true,
                       ),
                       const SizedBox(height: 20),

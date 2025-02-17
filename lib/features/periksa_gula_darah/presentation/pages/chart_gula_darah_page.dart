@@ -21,13 +21,12 @@ class ChartGulaDarahPage extends StatelessWidget {
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
         centerTitle: true,
       ),
-      body: BlocBuilder<PeriksaGulaDarahBloc, PeriksaGulaDarahState>(
+      body: BlocBuilder<GulaDarahBloc, GulaDarahState>(
         builder: (context, state) {
-          if (state is PeriksaGulaDarahLoading) {
+          if (state is GulaDarahLoading) {
             return const Loader();
-          } else if (state is PeriksaGulaDarahDisplaySuccess) {
-            final List<PeriksaGulaDarahEntity> data =
-                state.periksaGulaDarahList;
+          } else if (state is GulaDarahDisplaySuccess) {
+            final List<GulaDarahEntity> data = state.gulaDarahList;
 
             if (data.isEmpty) {
               return const Center(
@@ -83,7 +82,7 @@ class ChartGulaDarahPage extends StatelessWidget {
                 ],
               ),
             );
-          } else if (state is PeriksaGulaDarahFailure) {
+          } else if (state is GulaDarahFailure) {
             return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
