@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:posbinduptm/core/common/cubits/app_user/app_user_cubit.dart';
 import 'package:posbinduptm/core/theme/theme.dart';
-import 'package:posbinduptm/features/periksa_antropometri/presentation/bloc/antropometri_bloc.dart';
-import 'package:posbinduptm/features/periksa_antropometri/presentation/pages/antropometri_page.dart';
+import 'package:posbinduptm/features/antropometri/presentation/bloc/antropometri_bloc.dart';
+import 'package:posbinduptm/features/antropometri/presentation/pages/antropometri_page.dart';
 import 'package:posbinduptm/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:posbinduptm/features/auth/presentation/pages/login_page.dart';
 import 'package:posbinduptm/features/blog/presentation/bloc/blog_bloc.dart';
 import 'package:posbinduptm/features/blog/presentation/pages/blog_page.dart';
 import 'package:posbinduptm/features/periksa_gula_darah/presentation/bloc/gula_darah_bloc.dart';
 import 'package:posbinduptm/features/periksa_gula_darah/presentation/pages/gula_darah_page.dart';
+import 'package:posbinduptm/features/periksa_kolesterol_total/presentation/bloc/kolesterol_total_bloc.dart';
+import 'package:posbinduptm/features/periksa_kolesterol_total/presentation/pages/kolesterol_total_page.dart';
 import 'package:posbinduptm/features/periksa_tekanan_darah/presentation/bloc/tekanan_darah_bloc.dart';
 import 'package:posbinduptm/features/periksa_tekanan_darah/presentation/pages/tekanan_darah_page.dart';
 import 'package:posbinduptm/init_dependencies.dart';
@@ -40,6 +42,8 @@ void main() async {
       BlocProvider(create: (_) => serviceLocator<GulaDarahBloc>()),
       //mengelola data tekanan darah
       BlocProvider(create: (_) => serviceLocator<TekananDarahBloc>()),
+      //mengelola data kolesterol total
+      BlocProvider(create: (_) => serviceLocator<KolesterolTotalBloc>()),
     ],
     child: const MainApp(),
     // Menjalankan widget utama aplikasi
@@ -108,6 +112,7 @@ class _MainAppState extends State<MainApp> {
           '/antropometri': (context) => const AntropometriPage(),
           '/periksa_gula_darah': (context) => const GulaDarahPage(),
           '/periksa_tekanan_darah': (context) => const TekananDarahPage(),
+          '/periksa_kolesterol_total': (context) => const KolesterolTotalPage(),
         },
       ),
     );

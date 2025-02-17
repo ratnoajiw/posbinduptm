@@ -8,6 +8,7 @@ Future<void> initDependencies() async {
   _initAntropometri();
   _initGulaDarah();
   _initTekananDarah();
+  _initKolesterolTotal();
 
   final supabase = await Supabase.initialize(
     url: AppSecrets.supabaseUrl,
@@ -272,6 +273,49 @@ void _initTekananDarah() {
         getAllTekananDarah: serviceLocator(),
         updateTekananDarah: serviceLocator(),
         deleteTekananDarah: serviceLocator(),
+      ),
+    );
+}
+
+void _initKolesterolTotal() {
+  serviceLocator
+    ..registerFactory<KolesterolTotalRemoteDataSource>(
+      () => KolesterolTotalRemoteDataSourceImpl(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory<KolesterolTotalRepository>(
+      () => KolesterolTotalRepositoryImpl(
+        serviceLocator(),
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory(
+      () => UploadKolesterolTotal(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory(
+      () => UpdateKolesterolTotal(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory(
+      () => GetAllKolesterolTotal(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory(
+      () => DeleteKolesterolTotal(
+        serviceLocator(),
+      ),
+    )
+    ..registerLazySingleton(
+      () => KolesterolTotalBloc(
+        uploadKolesterolTotal: serviceLocator(),
+        getAllKolesterolTotal: serviceLocator(),
+        updateKolesterolTotal: serviceLocator(),
+        deleteKolesterolTotal: serviceLocator(),
       ),
     );
 }

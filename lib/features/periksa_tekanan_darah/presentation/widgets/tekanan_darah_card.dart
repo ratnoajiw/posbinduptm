@@ -105,7 +105,7 @@ class TekananDarahCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      "Tekanan Darah Sistolik/Diastolik",
+                      "Sistolik/Diastolik",
                       style: TextStyle(fontSize: 14, color: Colors.black),
                     ),
                     Row(

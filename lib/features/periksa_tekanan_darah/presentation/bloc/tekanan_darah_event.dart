@@ -49,8 +49,3 @@ class TekananDarahGet extends TekananDarahEvent {
   final String tekananDarahId;
   const TekananDarahGet({required this.tekananDarahId});
 }
-
-class TekananDarahGetLatest extends TekananDarahEvent {
-  final String profileId;
-  const TekananDarahGetLatest({required this.profileId});
-}

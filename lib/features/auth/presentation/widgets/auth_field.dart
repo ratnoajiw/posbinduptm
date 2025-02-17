@@ -5,6 +5,7 @@ class AuthField extends StatefulWidget {
   final String labelText;
   final TextEditingController controller;
   final bool isObsecureText;
+  final String? Function(String?)? validator; // Tambahan validator
 
   const AuthField({
     super.key,
@@ -12,6 +13,7 @@ class AuthField extends StatefulWidget {
     required this.labelText,
     required this.controller,
     this.isObsecureText = false,
+    this.validator, // Parameter tambahan
   });
 
   @override
@@ -24,7 +26,7 @@ class _AuthFieldState extends State<AuthField> {
   @override
   void initState() {
     super.initState();
-    isObscured = widget.isObsecureText; // Menyimpan nilai awal dari widget
+    isObscured = widget.isObsecureText;
   }
 
   @override
@@ -45,14 +47,15 @@ class _AuthFieldState extends State<AuthField> {
                   });
                 },
               )
-            : null, // Jika bukan password, tidak ada ikon
+            : null,
       ),
-      validator: (value) {
-        if (value!.isEmpty) {
-          return "${widget.labelText} harus diisi";
-        }
-        return null;
-      },
+      validator: widget.validator ??
+          (value) {
+            if (value!.isEmpty) {
+              return "${widget.labelText} harus diisi";
+            }
+            return null;
+          },
       obscureText: isObscured,
     );
   }

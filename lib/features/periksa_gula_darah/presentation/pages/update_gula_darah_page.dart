@@ -137,7 +137,7 @@ class _UpdateGulaDarahPageState extends State<UpdateGulaDarahPage> {
                 const SizedBox(height: 10),
                 GulaDarahField(
                   controller: gulaDarahController,
-                  hintText: 'Contoh: 110 (mg/dL)',
+                  hintText: 'Contoh: 110',
                   keyboardType: TextInputType.number,
                   suffixText: 'mg/dL',
                 ),

@@ -71,12 +71,19 @@ class AppDrawer extends StatelessWidget {
               },
             ),
             ListTile(
-              leading:
-                  const Icon(Icons.bloodtype_rounded, color: Colors.black54),
+              leading: const Icon(Icons.favorite_border, color: Colors.black54),
               title: const Text('Tekanan Darah'),
               onTap: () {
                 Navigator.pushReplacementNamed(
                     context, '/periksa_tekanan_darah');
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.bubble_chart, color: Colors.black54),
+              title: const Text('Kolesterol Total'),
+              onTap: () {
+                Navigator.pushReplacementNamed(
+                    context, '/periksa_kolesterol_total');
               },
             ),
             const Divider(),

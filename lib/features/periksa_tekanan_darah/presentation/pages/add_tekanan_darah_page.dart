@@ -151,7 +151,7 @@ class _AddTekananDarahPageState extends State<AddTekananDarahPage> {
                     const SizedBox(height: 10),
                     TekananDarahField(
                       controller: sistolikController,
-                      hintText: 'Contoh: 120 (mmHg)',
+                      hintText: 'Contoh: 120',
                       keyboardType: TextInputType.number,
                       suffixText: 'mmHg',
                     ),
@@ -161,7 +161,7 @@ class _AddTekananDarahPageState extends State<AddTekananDarahPage> {
                     const SizedBox(height: 10),
                     TekananDarahField(
                       controller: diastolikController,
-                      hintText: 'Contoh: 80 (mmHg)',
+                      hintText: 'Contoh: 80',
                       keyboardType: TextInputType.number,
                       suffixText: 'mmHg',
                     ),

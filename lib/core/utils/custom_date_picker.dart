@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:posbinduptm/core/theme/app_pallete.dart';
 
 class CustomDatePicker {
   static Future<String?> pickDate(BuildContext context) async {
     final DateTime now = DateTime.now();
+
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: now,
@@ -13,12 +15,13 @@ class CustomDatePicker {
         return Theme(
           data: Theme.of(context).copyWith(
             colorScheme: const ColorScheme.light(
-              primary: Colors.blueAccent,
+              primary: AppPallete.gradientGreen2,
               onPrimary: Colors.white,
               onSurface: Colors.black,
             ),
             textButtonTheme: TextButtonThemeData(
-              style: TextButton.styleFrom(foregroundColor: Colors.blueAccent),
+              style: TextButton.styleFrom(
+                  foregroundColor: AppPallete.gradientGreen2),
             ),
           ),
           child: child!,

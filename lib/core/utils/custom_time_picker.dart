@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:posbinduptm/core/theme/app_pallete.dart';
 
 class CustomTimePicker {
   static Future<String?> pickTime(BuildContext context) async {
@@ -10,7 +11,7 @@ class CustomTimePicker {
         return Theme(
           data: Theme.of(context).copyWith(
             colorScheme: const ColorScheme.light(
-              primary: Colors.blueAccent,
+              primary: AppPallete.gradientGreen2,
               onPrimary: Colors.white,
               onSurface: Colors.black,
             ),

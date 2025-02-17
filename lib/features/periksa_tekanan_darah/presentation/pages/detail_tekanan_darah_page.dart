@@ -188,8 +188,10 @@ class DetailTekananDarahPage extends StatelessWidget {
               const SizedBox(width: 10),
               Text(
                 title,
-                style: TextStyle(
-                    fontSize: 16, fontWeight: FontWeight.bold, color: color),
+                style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black),
               ),
             ],
           ),

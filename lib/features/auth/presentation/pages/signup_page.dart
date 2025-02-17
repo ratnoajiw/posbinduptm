@@ -10,11 +10,9 @@ import 'package:posbinduptm/features/auth/presentation/widgets/auth_field.dart';
 import 'package:posbinduptm/features/auth/presentation/widgets/auth_gradient_button.dart';
 import 'package:posbinduptm/features/blog/presentation/pages/blog_page.dart';
 
-// Widget SignUpPage untuk pendaftaran pengguna baru
 class SignUpPage extends StatefulWidget {
-  // Fungsi route untuk navigasi ke SignUpPage
   static route() => MaterialPageRoute(
-        builder: (contex) => const SignUpPage(),
+        builder: (context) => const SignUpPage(),
       );
   const SignUpPage({super.key});
 
@@ -23,20 +21,18 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  // Controller untuk input email
   final emailController = TextEditingController();
-  // Controller untuk input password
   final passwordController = TextEditingController();
-  // Controller untuk input nama
+  final confirmPasswordController =
+      TextEditingController(); // Tambahan konfirmasi password
   final nameController = TextEditingController();
-  // Key untuk form validasi
   final formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
-    // Membuang controller untuk menghindari memory leak
     emailController.dispose();
     passwordController.dispose();
+    confirmPasswordController.dispose();
     nameController.dispose();
     super.dispose();
   }
@@ -50,14 +46,11 @@ class _SignUpPageState extends State<SignUpPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(15.0),
-        // BlocConsumer untuk menangani state dari AuthBloc
         child: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
-            // Menampilkan snackbar jika terjadi error
             if (state is AuthFailure) {
               showSnackBar(context, state.message);
             } else if (state is AuthSuccess) {
-              // Navigasi ke BlogPage jika pendaftaran berhasil
               context.read<AppUserCubit>().updateUser(state.user);
               Navigator.pushAndRemoveUntil(
                 context,
@@ -67,11 +60,9 @@ class _SignUpPageState extends State<SignUpPage> {
             }
           },
           builder: (context, state) {
-            // Menampilkan loader jika sedang loading
             if (state is AuthLoading) {
               return const Loader();
             }
-            // Menampilkan form pendaftaran
             return Center(
               child: Form(
                 key: formKey,
@@ -79,7 +70,6 @@ class _SignUpPageState extends State<SignUpPage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      // Menampilkan nama aplikasi dengan warna gradient
                       RichText(
                         text: TextSpan(
                           text: 'Posbindu ',
@@ -98,44 +88,46 @@ class _SignUpPageState extends State<SignUpPage> {
                           ],
                         ),
                       ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      // Input nama
+                      const SizedBox(height: 30),
                       AuthField(
                         controller: nameController,
                         labelText: 'Nama',
-                        hintText: 'ketik nama Anda di sini',
+                        hintText: 'Ketik nama Anda di sini',
                       ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      // Input email
+                      const SizedBox(height: 15),
                       AuthField(
                         controller: emailController,
                         labelText: 'Email',
-                        hintText: 'ketik email Anda di sini',
+                        hintText: 'Ketik email Anda di sini',
                       ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      // Input password
+                      const SizedBox(height: 15),
                       AuthField(
                         controller: passwordController,
                         labelText: 'Password',
-                        hintText: 'ketik password Anda di sini',
+                        hintText: 'Ketik password Anda di sini',
                         isObsecureText: true,
                       ),
-                      const SizedBox(
-                        height: 20,
+                      const SizedBox(height: 15),
+                      AuthField(
+                        controller: confirmPasswordController,
+                        labelText: 'Konfirmasi Password',
+                        hintText: 'Ketik ulang password Anda',
+                        isObsecureText: true,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Konfirmasi password harus diisi";
+                          }
+                          if (value != passwordController.text) {
+                            return "Password tidak cocok";
+                          }
+                          return null;
+                        },
                       ),
-                      // Tombol daftar
+                      const SizedBox(height: 20),
                       AuthGradientButton(
                         buttonText: 'Daftar',
                         onPressed: () {
-                          // Validasi form sebelum submit
                           if (formKey.currentState!.validate()) {
-                            // Menambahkan event AuthSignUp ke AuthBloc
                             context.read<AuthBloc>().add(
                                   AuthSignUp(
                                     email: emailController.text.trim(),
@@ -146,10 +138,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           }
                         },
                       ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      // Link untuk navigasi ke LoginPage
+                      const SizedBox(height: 20),
                       GestureDetector(
                         onTap: () {
                           Navigator.push(

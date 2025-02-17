@@ -32,7 +32,3 @@ final class TekananDarahLatestSuccess extends TekananDarahState {
   final TekananDarahEntity latestTekananDarah;
   const TekananDarahLatestSuccess(this.latestTekananDarah);
 }
-
-final class TekananDarahLatestEmpty extends TekananDarahState {
-  const TekananDarahLatestEmpty();
-}
