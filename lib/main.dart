@@ -8,6 +8,9 @@ import 'package:posbinduptm/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:posbinduptm/features/auth/presentation/pages/login_page.dart';
 import 'package:posbinduptm/features/blog/presentation/bloc/blog_bloc.dart';
 import 'package:posbinduptm/features/blog/presentation/pages/blog_page.dart';
+import 'package:posbinduptm/features/pasien/presentation/bloc/pasien_bloc.dart';
+import 'package:posbinduptm/features/pasien/presentation/pages/detail_pasien_page.dart';
+import 'package:posbinduptm/features/pasien/presentation/pages/pasien_page.dart';
 import 'package:posbinduptm/features/periksa_gula_darah/presentation/bloc/gula_darah_bloc.dart';
 import 'package:posbinduptm/features/periksa_gula_darah/presentation/pages/gula_darah_page.dart';
 import 'package:posbinduptm/features/periksa_kolesterol_total/presentation/bloc/kolesterol_total_bloc.dart';
@@ -44,6 +47,8 @@ void main() async {
       BlocProvider(create: (_) => serviceLocator<TekananDarahBloc>()),
       //mengelola data kolesterol total
       BlocProvider(create: (_) => serviceLocator<KolesterolTotalBloc>()),
+      //mengelola data pasien
+      BlocProvider(create: (_) => serviceLocator<PasienBloc>()),
     ],
     child: const MainApp(),
     // Menjalankan widget utama aplikasi
@@ -113,6 +118,8 @@ class _MainAppState extends State<MainApp> {
           '/periksa_gula_darah': (context) => const GulaDarahPage(),
           '/periksa_tekanan_darah': (context) => const TekananDarahPage(),
           '/periksa_kolesterol_total': (context) => const KolesterolTotalPage(),
+          '/pasien': (context) => const PasienPage(),
+          '/pasien_detail': (context) => const DetailPasienPage(),
         },
       ),
     );

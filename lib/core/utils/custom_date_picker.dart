@@ -9,7 +9,7 @@ class CustomDatePicker {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: now,
-      firstDate: DateTime(2000),
+      firstDate: DateTime(1900),
       lastDate: now, // Maksimal hanya hari ini
       builder: (context, child) {
         return Theme(

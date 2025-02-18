@@ -38,7 +38,15 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       if (response.user == null) {
         throw const ServerException('User is null!');
       }
-      return UserModel.fromJson(response.user!.toJson());
+
+      // Ambil data pengguna dari tabel profiles
+      final userData = await supabaseClient
+          .from('profiles')
+          .select('*, name')
+          .eq('id', response.user!.id)
+          .single();
+
+      return UserModel.fromJson(userData);
     } on AuthException catch (e) {
       throw ServerException(e.message);
     } catch (e) {
@@ -75,13 +83,13 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   Future<UserModel?> getCurrentUserData() async {
     try {
       if (currentUserSession != null) {
-        final userData = await supabaseClient.from('profile').select().eq(
-              'id',
-              currentUserSession!.user.id,
-            );
-        return UserModel.fromJson(userData.first).copyWith(
-          email: currentUserSession!.user.email,
-        );
+        final response = await supabaseClient
+            .from('profiles')
+            .select('*, name')
+            .eq('id', currentUserSession!.user.id)
+            .single();
+
+        return UserModel.fromJson(response);
       }
       return null;
     } catch (e) {

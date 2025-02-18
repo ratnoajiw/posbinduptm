@@ -9,6 +9,7 @@ Future<void> initDependencies() async {
   _initGulaDarah();
   _initTekananDarah();
   _initKolesterolTotal();
+  _initPasien();
 
   final supabase = await Supabase.initialize(
     url: AppSecrets.supabaseUrl,
@@ -316,6 +317,44 @@ void _initKolesterolTotal() {
         getAllKolesterolTotal: serviceLocator(),
         updateKolesterolTotal: serviceLocator(),
         deleteKolesterolTotal: serviceLocator(),
+      ),
+    );
+}
+
+void _initPasien() {
+  serviceLocator
+    ..registerFactory<PasienRemoteDataSource>(
+      () => PasienRemoteDataSourceImpl(
+        serviceLocator(), // SupabaseClient
+      ),
+    )
+    ..registerFactory<PasienRepository>(
+      () => PasienRepositoryImpl(
+        remoteDataSource: serviceLocator(),
+        connectionChecker: serviceLocator(),
+        appUserCubit: serviceLocator(), // ConnectionChecker
+      ),
+    )
+    ..registerFactory(
+      () => GetPasienByProfileId(
+        serviceLocator(), // PasienRepository
+      ),
+    )
+    ..registerFactory(
+      () => CreatePasien(
+        serviceLocator(), // PasienRepository
+      ),
+    )
+    ..registerFactory(
+      () => UpdatePasien(
+        serviceLocator(), // PasienRepository
+      ),
+    )
+    ..registerLazySingleton(
+      () => PasienBloc(
+        getPasienByProfileId: serviceLocator(),
+        createPasien: serviceLocator(),
+        updatePasien: serviceLocator(),
       ),
     );
 }

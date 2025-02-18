@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:posbinduptm/core/theme/app_pallete.dart';
+
 import 'package:posbinduptm/core/utils/format_date.dart';
 import 'package:posbinduptm/core/utils/format_number.dart';
 import 'package:posbinduptm/features/periksa_kolesterol_total/domain/entities/kolesterol_total_entity.dart';

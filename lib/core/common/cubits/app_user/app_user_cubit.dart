@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:posbinduptm/core/common/entities/app_user.dart';
+import 'package:posbinduptm/core/common/models/app_user_model.dart'; // Import AppUserModel
 
 part 'app_user_state.dart';
 
@@ -15,7 +16,9 @@ class AppUserCubit extends Cubit<AppUserState> {
       emit(AppUserInitial());
     } else {
       // Jika user ada, emit state AppUserLoggedIn dengan data user
-      emit(AppUserLoggedIn(user));
+      final userModel =
+          AppUserModel.fromAppUser(user); // Konversi ke AppUserModel
+      emit(AppUserLoggedIn(userModel)); // Emit AppUserModel
     }
   }
 

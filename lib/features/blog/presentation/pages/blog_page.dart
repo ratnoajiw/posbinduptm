@@ -8,6 +8,7 @@ import 'package:posbinduptm/core/utils/show_snackbar.dart';
 import 'package:posbinduptm/features/blog/presentation/bloc/blog_bloc.dart';
 import 'package:posbinduptm/features/blog/presentation/pages/add_new_blog_page.dart';
 import 'package:posbinduptm/features/blog/presentation/widgets/blog_card.dart';
+import 'package:posbinduptm/features/pasien/presentation/bloc/pasien_bloc.dart';
 
 class BlogPage extends StatefulWidget {
   static route() => MaterialPageRoute(
@@ -32,6 +33,13 @@ class _BlogPageState extends State<BlogPage> {
   void initState() {
     super.initState();
     refreshBlogs();
+    // Ambil data pasien setelah halaman diinisialisasi
+    final appUser = context.read<AppUserCubit>().state;
+    if (appUser is AppUserLoggedIn) {
+      context
+          .read<PasienBloc>()
+          .add(GetPasienEvent(profileId: appUser.user.id));
+    }
   }
 
   @override
