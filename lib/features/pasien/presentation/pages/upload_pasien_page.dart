@@ -91,6 +91,16 @@ class _UploadPasienPageState extends State<UploadPasienPage> {
       appBar: AppBar(
         title: const Text('Profil Saya',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
+        actions: [
+          IconButton(
+              onPressed: () {
+                final appUser = context.read<AppUserCubit>().state;
+                if (appUser is AppUserLoggedIn) {
+                  _submitForm(appUser.user.id);
+                }
+              },
+              icon: const Icon(Icons.save))
+        ],
         centerTitle: true,
       ),
       body: BlocConsumer<PasienBloc, PasienState>(
@@ -133,7 +143,7 @@ class _UploadPasienPageState extends State<UploadPasienPage> {
                     const SizedBox(height: 8),
                     PasienField(
                       controller: _nikController,
-                      hintText: 'Masukkan NIK (opsional)',
+                      hintText: 'Masukkan NIK',
                       keyboardType: TextInputType.number,
                     ),
                     const SizedBox(height: 16),
@@ -182,7 +192,7 @@ class _UploadPasienPageState extends State<UploadPasienPage> {
                     const SizedBox(height: 8),
                     PasienField(
                       controller: _tanggalLahirController,
-                      hintText: 'Pilih tanggal lahir (opsional)',
+                      hintText: 'Pilih tanggal lahir',
                       keyboardType: TextInputType.none,
                       readOnly: true,
                       onTap: () => _pickTanggalLahir(context),
@@ -196,7 +206,7 @@ class _UploadPasienPageState extends State<UploadPasienPage> {
                     const SizedBox(height: 8),
                     PasienField(
                       controller: _alamatController,
-                      hintText: 'Masukkan alamat (opsional)',
+                      hintText: 'Masukkan alamat',
                       keyboardType: TextInputType.streetAddress,
                     ),
                     const SizedBox(height: 16),
@@ -207,23 +217,8 @@ class _UploadPasienPageState extends State<UploadPasienPage> {
                     const SizedBox(height: 8),
                     PasienField(
                       controller: _nomorHpController,
-                      hintText: 'Masukkan nomor HP (opsional)',
+                      hintText: 'Masukkan nomor HP',
                       keyboardType: TextInputType.phone,
-                    ),
-                    const SizedBox(height: 24),
-
-                    // **Tombol Simpan**
-                    SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          final appUser = context.read<AppUserCubit>().state;
-                          if (appUser is AppUserLoggedIn) {
-                            _submitForm(appUser.user.id);
-                          }
-                        },
-                        child: const Text('Simpan Profil'),
-                      ),
                     ),
                   ],
                 ),
